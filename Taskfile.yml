@@ -1,0 +1,43 @@
+version: "3"
+
+# Each placeholder is filled in by the card named next to it.
+tasks:
+  setup:
+    desc: Install Python dependencies (GPU PyTorch included)
+    cmds:
+      - uv sync
+
+  gpu:
+    desc: Check PyTorch can see the GPU
+    cmds:
+      - uv run python -c "import torch; print('cuda', torch.cuda.is_available(), torch.cuda.get_device_name(0) if torch.cuda.is_available() else '')"
+
+  test:
+    desc: Run all tests
+    cmds:
+      - uv run pytest -q
+
+  data:
+    desc: Download dataset, build the 37/8/8 split and manifest (TRIA-3)
+    cmds:
+      - echo "not built yet — TRIA-3"
+
+  train:
+    desc: QLoRA fine-tuning (TRIA-7)
+    cmds:
+      - echo "not built yet — TRIA-7"
+
+  eval:
+    desc: Score predictions on a split (TRIA-5/6/8)
+    cmds:
+      - echo "not built yet — TRIA-5"
+
+  bench:
+    desc: KV cache, attention and speculative benchmarks (TRIA-9/10/11)
+    cmds:
+      - echo "not built yet — TRIA-9"
+
+  app:
+    desc: Start backend and browser app (TRIA-12/13)
+    cmds:
+      - echo "not built yet — TRIA-12"

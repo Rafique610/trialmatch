@@ -1,0 +1,38 @@
+[project]
+name = "trialmatch"
+version = "0.1.0"
+description = "Criterion-level clinical trial eligibility with evidence, KV cache, tiled attention and speculative decoding (GenAI Assignment 2)"
+readme = "README.md"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "torch>=2.7",
+    "transformers>=4.51",
+    "peft>=0.15",
+    "bitsandbytes>=0.45",
+    "accelerate>=1.6",
+    "datasets>=3.5",
+    "numpy>=2.0",
+    "pandas>=2.2",
+    "scikit-learn>=1.6",
+    "matplotlib>=3.10",
+    "fastapi>=0.115",
+    "uvicorn>=0.34",
+    "pydantic-settings>=2.8",
+    "huggingface-hub>=0.30",
+]
+
+[dependency-groups]
+dev = ["pytest>=8.3"]
+
+# CUDA build of PyTorch (driver supports CUDA 13.x; cu128 wheels run on it)
+[tool.uv.sources]
+torch = [{ index = "pytorch-cu128" }]
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

@@ -1,0 +1,36 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Data and model files (downloaded or produced, never committed)
+data/raw/
+data/processed/
+checkpoints/
+*.safetensors
+*.bin
+*.pt
+
+# Node
+node_modules/
+web/.next/
+
+# Local env and agent memory
+.env
+.env.local
+.memory/
+
+# LaTeX build output
+report/*.aux
+report/*.log
+report/*.out
+report/*.bbl
+report/*.blg
+report/*.synctex.gz
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
