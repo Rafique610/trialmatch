@@ -17,6 +17,14 @@ tasks:
     cmds:
       - uv run pytest -q
 
+  research:
+    desc: Pull model facts from Hugging Face and check draft/target tokenizers match (TRIA-2)
+    env:
+      HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+    cmds:
+      - uv run python -m src.research.model_facts
+      - uv run python -m src.speculative.check_tokenizers
+
   data:
     desc: Download dataset, build the 37/8/8 split and manifest (TRIA-3)
     cmds:

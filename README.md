@@ -17,7 +17,8 @@ GenAI Assignment 2 · dataset: [TrialGPT Criterion Annotations](https://huggingf
 | Part | Card | State |
 | --- | --- | --- |
 | Project setup | TRIA-1 | done |
-| Research, data, training, evaluation | TRIA-2 to 8 | not started |
+| Research and model choice | TRIA-2 | done |
+| Data, training, evaluation | TRIA-3 to 8 | not started |
 | KV cache, tiled attention, speculative decoding | TRIA-9 to 11 | not started |
 | App | TRIA-12, 13 | not started |
 | Paper and submission | TRIA-14, 15 | not started |
@@ -37,11 +38,28 @@ task test    # runs the test suite
 
 `task --list` shows every command. Commands not built yet print which card adds them.
 
+## Models
+
+| Role | Model | Why |
+| --- | --- | --- |
+| Target (fine-tuned) | [Qwen/Qwen2.5-1.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct) | Apache-2.0, ungated, 2.88 GB fp16 / 1.04 GB 4-bit, fits a 6 GB GPU |
+| Draft (speculative decoding) | [Qwen/Qwen2.5-0.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct) | Identical tokenizer to the target (verified) |
+
+```bash
+task research   # re-pulls model facts -> results/model_candidates.json
+                # and checks tokenizers -> results/tokenizer_compat.json
+```
+
+Comparison and reasoning: [docs/research/models.md](docs/research/models.md),
+[docs/research/literature.md](docs/research/literature.md),
+[ADR 0004](docs/adrs/0004-model-choice.md), [ADR 0005](docs/adrs/0005-finetune-method.md).
+
 ## Layout
 
 | Folder | What it holds |
 | --- | --- |
 | `src/config.py` | All settings (model ids, paths, split seed); override with `TM_*` env vars |
+| `src/research/` | Model fact collection for the comparison |
 | `src/data/` | Dataset loading, patient-grouped split, prompt format |
 | `src/eval/` | Label and evidence metrics |
 | `src/finetune/` | Baseline prediction and QLoRA training |

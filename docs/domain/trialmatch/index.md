@@ -41,6 +41,7 @@ training and benchmarks run here (ADR 0003).
 
 | Folder | Feature | Card |
 | --- | --- | --- |
+| `src/research/` | model facts for the comparison | TRIA-2 |
 | `src/data/` | load, clean, split, prompt | TRIA-3, 4 |
 | `src/eval/` | metrics | TRIA-5 |
 | `src/finetune/` | predict + train | TRIA-6, 7 |
@@ -58,10 +59,19 @@ training and benchmarks run here (ADR 0003).
 - ADR 0001: training target is label + evidence ids; explanation built from cited sentences.
 - ADR 0002: overall patient outcome is a stated rule over criterion labels.
 - ADR 0003: train and benchmark on the local RTX 3050.
+- ADR 0004: target Qwen2.5-1.5B-Instruct, draft Qwen2.5-0.5B-Instruct (tokenizers verified identical).
+- ADR 0005: QLoRA (NF4 base + LoRA r≈16 on all projections), loss on answer tokens only.
+
+## Research
+
+`docs/research/literature.md` (13 sources, S1–S13) and `docs/research/models.md`
+(the comparison table). Raw facts are in `results/model_candidates.json` and
+`results/tokenizer_compat.json`; regenerate them with `task research`.
 
 ## Phase status
 
 | Card | Status |
 | --- | --- |
-| TRIA-1 Setup | in review |
-| TRIA-2 to 15 | backlog |
+| TRIA-1 Setup | done |
+| TRIA-2 Research + model choice | in review |
+| TRIA-3 to 15 | backlog |
