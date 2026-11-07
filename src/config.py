@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_prefix="TM_", env_file=".env", extra="ignore")
 
     dataset_id: str = "ncbi/TrialGPT-Criterion-Annotations"
+    dataset_revision: str = "1cfcafde94a1560a33b4addc1638664fe28fc059"  # pinned so the split never shifts
     target_model_id: str = "Qwen/Qwen2.5-1.5B-Instruct"
     draft_model_id: str = "Qwen/Qwen2.5-0.5B-Instruct"
     adapter_repo_id: str = ""  # filled in by TRIA-7 once the adapter is uploaded

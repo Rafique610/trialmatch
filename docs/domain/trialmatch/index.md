@@ -68,10 +68,22 @@ training and benchmarks run here (ADR 0003).
 (the comparison table). Raw facts are in `results/model_candidates.json` and
 `results/tokenizer_compat.json`; regenerate them with `task research`.
 
+## Data
+
+1,015 criterion rows from 53 patients, split 37/8/8 (603/206/206 rows). See
+`dataset.md` for the columns kept and dropped, label counts and known
+consequences. Built with `task data`. Processed files go to
+`data/processed/{train,val,test}.jsonl` (git-ignored); the manifest is
+`results/split_manifest.json` (committed).
+
+Record shape: `annotation_id, patient_id, trial_id, trial_title,
+criterion_type, criterion_text, sentences[], label, evidence_ids[]`.
+
 ## Phase status
 
 | Card | Status |
 | --- | --- |
 | TRIA-1 Setup | done |
-| TRIA-2 Research + model choice | in review |
-| TRIA-3 to 15 | backlog |
+| TRIA-2 Research + model choice | done |
+| TRIA-3 Data + split | in review |
+| TRIA-4 to 15 | backlog |

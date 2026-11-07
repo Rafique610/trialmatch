@@ -27,8 +27,10 @@ tasks:
 
   data:
     desc: Download dataset, build the 37/8/8 split and manifest (TRIA-3)
+    env:
+      HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
     cmds:
-      - echo "not built yet — TRIA-3"
+      - uv run python -m src.data.split
 
   train:
     desc: QLoRA fine-tuning (TRIA-7)

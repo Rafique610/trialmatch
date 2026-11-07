@@ -18,7 +18,8 @@ GenAI Assignment 2 · dataset: [TrialGPT Criterion Annotations](https://huggingf
 | --- | --- | --- |
 | Project setup | TRIA-1 | done |
 | Research and model choice | TRIA-2 | done |
-| Data, training, evaluation | TRIA-3 to 8 | not started |
+| Dataset and 37/8/8 split | TRIA-3 | done |
+| Prompt, training, evaluation | TRIA-4 to 8 | not started |
 | KV cache, tiled attention, speculative decoding | TRIA-9 to 11 | not started |
 | App | TRIA-12, 13 | not started |
 | Paper and submission | TRIA-14, 15 | not started |
@@ -37,6 +38,24 @@ task test    # runs the test suite
 ```
 
 `task --list` shows every command. Commands not built yet print which card adds them.
+
+## Data and split
+
+```bash
+task data    # downloads the dataset (pinned revision), drops GPT-4 columns,
+             # splits patients 37/8/8 with numpy default_rng(42)
+```
+
+| Split | Patients | Criterion rows |
+| --- | --- | --- |
+| train | 37 | 603 |
+| val | 8 | 206 |
+| test | 8 | 206 |
+
+- Manifest with patient ids, label counts and file hashes: [results/split_manifest.json](results/split_manifest.json).
+- Processed rows are written to `data/processed/*.jsonl` (not committed; `task data` rebuilds them identically).
+- Leakage tests run with `task test` (`tests/test_split.py`).
+- Column choices and label counts: [docs/domain/trialmatch/dataset.md](docs/domain/trialmatch/dataset.md).
 
 ## Models
 
