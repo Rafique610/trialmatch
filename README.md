@@ -19,7 +19,8 @@ GenAI Assignment 2 · dataset: [TrialGPT Criterion Annotations](https://huggingf
 | Project setup | TRIA-1 | done |
 | Research and model choice | TRIA-2 | done |
 | Dataset and 37/8/8 split | TRIA-3 | done |
-| Prompt, training, evaluation | TRIA-4 to 8 | not started |
+| Prompt format and token lengths | TRIA-4 | done |
+| Evaluation, training | TRIA-5 to 8 | not started |
 | KV cache, tiled attention, speculative decoding | TRIA-9 to 11 | not started |
 | App | TRIA-12, 13 | not started |
 | Paper and submission | TRIA-14, 15 | not started |
@@ -56,6 +57,20 @@ task data    # downloads the dataset (pinned revision), drops GPT-4 columns,
 - Processed rows are written to `data/processed/*.jsonl` (not committed; `task data` rebuilds them identically).
 - Leakage tests run with `task test` (`tests/test_split.py`).
 - Column choices and label counts: [docs/domain/trialmatch/dataset.md](docs/domain/trialmatch/dataset.md).
+
+### Prompt and answer
+
+The model reads the numbered note, the criterion type and the criterion text,
+and answers with JSON only:
+
+```json
+{"label": "not enough information", "evidence_ids": [0]}
+```
+
+`task data` also measures token lengths: the longest example is 636 tokens,
+the maximum length is 1024, and **no note is truncated** (0 gold evidence
+sentences lost). See [results/truncation_report.json](results/truncation_report.json)
+and [docs/domain/trialmatch/prompt.md](docs/domain/trialmatch/prompt.md).
 
 ## Models
 

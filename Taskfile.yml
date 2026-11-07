@@ -26,11 +26,12 @@ tasks:
       - uv run python -m src.speculative.check_tokenizers
 
   data:
-    desc: Download dataset, build the 37/8/8 split and manifest (TRIA-3)
+    desc: Download dataset, build the 37/8/8 split + manifest, measure token lengths (TRIA-3/4)
     env:
       HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
     cmds:
       - uv run python -m src.data.split
+      - uv run python -m src.data.lengths
 
   train:
     desc: QLoRA fine-tuning (TRIA-7)

@@ -1,0 +1,92 @@
+{
+  "tokenizer": "Qwen/Qwen2.5-1.5B-Instruct",
+  "max_len": 1024,
+  "splits": {
+    "train": {
+      "rows": 603,
+      "prompt_tokens": {
+        "min": 240,
+        "median": 307,
+        "p95": 494,
+        "max": 609
+      },
+      "training_tokens": {
+        "min": 255,
+        "median": 324,
+        "p95": 511,
+        "max": 636
+      },
+      "answer_tokens": {
+        "min": 14,
+        "median": 15,
+        "p95": 22,
+        "max": 39
+      },
+      "note_sentences": {
+        "min": 3,
+        "median": 6,
+        "p95": 12,
+        "max": 14
+      },
+      "over_max_len": 0
+    },
+    "val": {
+      "rows": 206,
+      "prompt_tokens": {
+        "min": 279,
+        "median": 349,
+        "p95": 391,
+        "max": 454
+      },
+      "training_tokens": {
+        "min": 294,
+        "median": 366,
+        "p95": 408,
+        "max": 470
+      },
+      "answer_tokens": {
+        "min": 14,
+        "median": 15,
+        "p95": 19,
+        "max": 26
+      },
+      "note_sentences": {
+        "min": 5,
+        "median": 7,
+        "p95": 9,
+        "max": 9
+      },
+      "over_max_len": 0
+    },
+    "test": {
+      "rows": 206,
+      "prompt_tokens": {
+        "min": 258,
+        "median": 307,
+        "p95": 378,
+        "max": 513
+      },
+      "training_tokens": {
+        "min": 273,
+        "median": 323,
+        "p95": 394,
+        "max": 530
+      },
+      "answer_tokens": {
+        "min": 15,
+        "median": 15,
+        "p95": 18,
+        "max": 29
+      },
+      "note_sentences": {
+        "min": 4,
+        "median": 5,
+        "p95": 9,
+        "max": 9
+      },
+      "over_max_len": 0
+    }
+  },
+  "truncated": [],
+  "gold_evidence_lost_total": 0
+}

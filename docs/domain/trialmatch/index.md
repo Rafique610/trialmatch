@@ -79,11 +79,18 @@ consequences. Built with `task data`. Processed files go to
 Record shape: `annotation_id, patient_id, trial_id, trial_title,
 criterion_type, criterion_text, sentences[], label, evidence_ids[]`.
 
+## Prompt
+
+The input/answer contract, parser and token lengths are in `prompt.md`.
+Answer = `{"label", "evidence_ids"}`; `MAX_LEN = 1024` (longest example 636
+tokens, nothing truncated).
+
 ## Phase status
 
 | Card | Status |
 | --- | --- |
 | TRIA-1 Setup | done |
 | TRIA-2 Research + model choice | done |
-| TRIA-3 Data + split | in review |
-| TRIA-4 to 15 | backlog |
+| TRIA-3 Data + split | done |
+| TRIA-4 Prompt + lengths | in review |
+| TRIA-5 to 15 | backlog |
