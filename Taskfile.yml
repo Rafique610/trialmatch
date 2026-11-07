@@ -39,9 +39,9 @@ tasks:
       - echo "not built yet — TRIA-7"
 
   eval:
-    desc: Score predictions on a split (TRIA-5/6/8)
+    desc: "Score a run folder: task eval -- results/<run> (TRIA-5)"
     cmds:
-      - echo "not built yet — TRIA-5"
+      - uv run python -m src.eval.run {{.CLI_ARGS}}
 
   bench:
     desc: KV cache, attention and speculative benchmarks (TRIA-9/10/11)

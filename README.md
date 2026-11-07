@@ -20,7 +20,8 @@ GenAI Assignment 2 · dataset: [TrialGPT Criterion Annotations](https://huggingf
 | Research and model choice | TRIA-2 | done |
 | Dataset and 37/8/8 split | TRIA-3 | done |
 | Prompt format and token lengths | TRIA-4 | done |
-| Evaluation, training | TRIA-5 to 8 | not started |
+| Evaluation metrics | TRIA-5 | done |
+| Baseline, training, final test | TRIA-6 to 8 | not started |
 | KV cache, tiled attention, speculative decoding | TRIA-9 to 11 | not started |
 | App | TRIA-12, 13 | not started |
 | Paper and submission | TRIA-14, 15 | not started |
@@ -71,6 +72,22 @@ and answers with JSON only:
 the maximum length is 1024, and **no note is truncated** (0 gold evidence
 sentences lost). See [results/truncation_report.json](results/truncation_report.json)
 and [docs/domain/trialmatch/prompt.md](docs/domain/trialmatch/prompt.md).
+
+## Evaluation
+
+```bash
+task eval -- results/<run>   # needs meta.json + predictions.jsonl in that folder
+```
+
+Writes `metrics.json`, `per_record.jsonl` and three confusion-matrix PNGs
+(overall, inclusion, exclusion) into the run folder. The metrics are:
+
+- **labels:** accuracy, macro-F1, per-class precision/recall/F1, confusion matrices
+- **evidence:** sentence-id micro and macro precision/recall/F1, with explicit
+  rules for empty gold or predicted sets
+
+Unparseable answers are counted as errors, never guessed. Conventions:
+[docs/domain/trialmatch/eval.md](docs/domain/trialmatch/eval.md).
 
 ## Models
 

@@ -92,5 +92,12 @@ tokens, nothing truncated).
 | TRIA-1 Setup | done |
 | TRIA-2 Research + model choice | done |
 | TRIA-3 Data + split | done |
-| TRIA-4 Prompt + lengths | in review |
-| TRIA-5 to 15 | backlog |
+| TRIA-4 Prompt + lengths | done |
+| TRIA-5 Evaluation metrics | in review |
+| TRIA-6 to 15 | backlog |
+
+## Evaluation
+
+`task eval -- results/<run>` scores a run folder (`meta.json` +
+`predictions.jsonl`). The metric conventions, especially for empty evidence
+sets and absent classes, are in `eval.md`.
