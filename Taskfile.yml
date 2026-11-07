@@ -33,6 +33,13 @@ tasks:
       - uv run python -m src.data.split
       - uv run python -m src.data.lengths
 
+  baseline:
+    desc: Untrained Qwen2.5-1.5B on the validation split, scored -> results/baseline_val (TRIA-6)
+    env:
+      HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+    cmds:
+      - uv run python -m src.finetune.predict --split val --run baseline_val
+
   train:
     desc: QLoRA fine-tuning (TRIA-7)
     cmds:

@@ -93,8 +93,17 @@ tokens, nothing truncated).
 | TRIA-2 Research + model choice | done |
 | TRIA-3 Data + split | done |
 | TRIA-4 Prompt + lengths | done |
-| TRIA-5 Evaluation metrics | in review |
-| TRIA-6 to 15 | backlog |
+| TRIA-5 Evaluation metrics | done |
+| TRIA-6 Baseline on val | done |
+| TRIA-7 to 15 | backlog |
+
+## Baseline
+
+`task baseline` → `results/baseline_val/`. The untrained model scores val
+accuracy 0.068 and macro-F1 0.081: correct JSON, but label collapse and
+inverted exclusion polarity. Details in `baseline.md`. The predictor
+`src/finetune/predict.py` (`--split`, `--run`, `--adapter`, `--limit`) is
+reused by TRIA-7 and TRIA-8.
 
 ## Evaluation
 

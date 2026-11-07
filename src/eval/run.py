@@ -54,7 +54,7 @@ def plot_confusion(cm: dict, title: str, path: Path) -> None:
 
 def evaluate(run_dir: Path) -> dict:
     meta = json.loads((run_dir / "meta.json").read_text(encoding="utf-8"))
-    gold = read_jsonl(settings.data_dir / "processed" / f"{meta['split']}.jsonl")
+    gold = read_jsonl(settings.data_dir / "processed" / f"{meta['split']}.jsonl")[: meta.get("limit")]  # smoke runs only
     rows = join(gold, read_jsonl(run_dir / "predictions.jsonl"))
     metrics = {"meta": meta, **score(rows)}
     (run_dir / "metrics.json").write_text(json.dumps(metrics, indent=2), encoding="utf-8")

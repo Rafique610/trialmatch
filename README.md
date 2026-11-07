@@ -21,7 +21,8 @@ GenAI Assignment 2 · dataset: [TrialGPT Criterion Annotations](https://huggingf
 | Dataset and 37/8/8 split | TRIA-3 | done |
 | Prompt format and token lengths | TRIA-4 | done |
 | Evaluation metrics | TRIA-5 | done |
-| Baseline, training, final test | TRIA-6 to 8 | not started |
+| Untrained baseline (val) | TRIA-6 | done |
+| Training, final test | TRIA-7, 8 | not started |
 | KV cache, tiled attention, speculative decoding | TRIA-9 to 11 | not started |
 | App | TRIA-12, 13 | not started |
 | Paper and submission | TRIA-14, 15 | not started |
@@ -88,6 +89,20 @@ Writes `metrics.json`, `per_record.jsonl` and three confusion-matrix PNGs
 
 Unparseable answers are counted as errors, never guessed. Conventions:
 [docs/domain/trialmatch/eval.md](docs/domain/trialmatch/eval.md).
+
+## Results so far (validation, 206 criteria)
+
+| Model | Accuracy | Macro-F1 | Evidence micro-F1 |
+| --- | --- | --- | --- |
+| Qwen2.5-1.5B-Instruct, untrained (greedy, fp16) | 0.068 | 0.081 | 0.134 |
+
+```bash
+task baseline   # re-runs the untrained model on val (~1 min on an RTX 3050)
+```
+
+The untrained model answers in valid JSON, but collapses to one label per
+criterion type and reads exclusion backwards. See
+[docs/domain/trialmatch/baseline.md](docs/domain/trialmatch/baseline.md).
 
 ## Models
 
