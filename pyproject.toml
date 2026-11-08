@@ -36,3 +36,5 @@ explicit = true
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
+markers = ["gpu: needs the GPU and the downloaded 1.5B model (task test-gpu)"]
+addopts = "-m \"not gpu\""

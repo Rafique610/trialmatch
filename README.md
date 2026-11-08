@@ -23,8 +23,9 @@ GenAI Assignment 2 · dataset: [TrialGPT Criterion Annotations](https://huggingf
 | Evaluation metrics | TRIA-5 | done |
 | Untrained baseline (val) | TRIA-6 | done |
 | QLoRA training sweep (val) | TRIA-7 | done |
-| Final test + error analysis | TRIA-8 | in review |
-| KV cache, tiled attention, speculative decoding | TRIA-9 to 11 | not started |
+| Final test + error analysis | TRIA-8 | done |
+| KV cache (own decoder, equivalence, benchmark) | TRIA-9 | in review |
+| Tiled attention, speculative decoding | TRIA-10, 11 | not started |
 | App | TRIA-12, 13 | not started |
 | Paper and submission | TRIA-14, 15 | not started |
 
@@ -138,6 +139,19 @@ traced to sentence ids: [results/error_analysis.md](results/error_analysis.md).
 
 ```bash
 task final-test
+```
+
+## KV cache (TRIA-9)
+
+Our own greedy decoder with an explicit KV cache: RoPE positions, causal mask with
+cache offset, grouped-query attention. It matches full recomputation token for token
+(64/32, 256/64, 1024/128). It decodes about 40 ms/token at any prompt length, against
+58–875 ms without the cache, which is 20× faster at 2048 tokens. Details:
+[docs/domain/trialmatch/kvcache.md](docs/domain/trialmatch/kvcache.md).
+
+```bash
+task bench       # equivalence + benchmark -> results/bench/kvcache.json, kvcache.png
+task test-gpu    # token-equality tests on the real model (~2.5 min)
 ```
 
 ## Models

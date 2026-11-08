@@ -17,6 +17,13 @@ tasks:
     cmds:
       - uv run pytest -q
 
+  test-gpu:
+    desc: Run the slow GPU tests on the real model (KV cache equivalence, ...)
+    env:
+      HF_HUB_OFFLINE: "1"
+    cmds:
+      - uv run pytest -q -m gpu
+
   research:
     desc: Pull model facts from Hugging Face and check draft/target tokenizers match (TRIA-2)
     env:
@@ -78,9 +85,11 @@ tasks:
       - uv run python -m src.eval.compare results/baseline_test results/finetuned_test > results/test_comparison.md
 
   bench:
-    desc: KV cache, attention and speculative benchmarks (TRIA-9/10/11)
+    desc: KV cache equivalence + benchmark -> results/bench/kvcache.json (TRIA-9); attention and speculative added by TRIA-10/11
+    env:
+      HF_HUB_OFFLINE: "1"
     cmds:
-      - echo "not built yet — TRIA-9"
+      - uv run python -m src.kvcache.bench
 
   app:
     desc: Start backend and browser app (TRIA-12/13)

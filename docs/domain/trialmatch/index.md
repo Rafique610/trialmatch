@@ -96,8 +96,9 @@ tokens, nothing truncated).
 | TRIA-5 Evaluation metrics | done |
 | TRIA-6 Baseline on val | done |
 | TRIA-7 Fine-tune sweep | done |
-| TRIA-8 Final test | in review |
-| TRIA-9 to 15 | backlog |
+| TRIA-8 Final test | done |
+| TRIA-9 KV cache | in review |
+| TRIA-10 to 15 | backlog |
 
 ## Baseline
 
@@ -125,6 +126,13 @@ evidence micro-F1 0.157 → 0.579, 0 parse errors. Table: `results/test_comparis
 (built by `src/eval/compare.py`). Error analysis: `results/error_analysis.md` (10 cases).
 The largest error source is the "not mentioned" convention, which the gold labels apply
 inconsistently.
+
+## KV cache
+
+`src/kvcache/`: our own forward over the Qwen2 layers, with `KVCache` (preallocated, `crop` for
+rollback) and a pluggable `attn_fn` (TRIA-10 plugs in here). `greedy_cached` equals full
+recompute token for token. Benchmark: `results/bench/kvcache.json`. GPU tests are marked `gpu`
+(`task test-gpu`), and `task test` skips them. Details in `kvcache.md`.
 
 ## Evaluation
 
