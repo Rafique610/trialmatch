@@ -94,6 +94,8 @@ tasks:
       - uv run python -m src.speculative.bench
 
   app:
-    desc: Start backend and browser app (TRIA-12/13)
+    desc: "Start the API on http://localhost:8000 (/docs to try every endpoint); the browser app is added by TRIA-13"
+    env:
+      HF_HUB_OFFLINE: "1"
     cmds:
-      - echo "not built yet — TRIA-12"
+      - uv run uvicorn src.app.main:app --port 8000

@@ -99,8 +99,9 @@ tokens, nothing truncated).
 | TRIA-8 Final test | done |
 | TRIA-9 KV cache | done |
 | TRIA-10 Tiled attention | done |
-| TRIA-11 Speculative decoding | in review |
-| TRIA-12 to 15 | backlog |
+| TRIA-11 Speculative decoding | done |
+| TRIA-12 App backend | in review |
+| TRIA-13 to 15 | backlog |
 
 ## Baseline
 
@@ -148,6 +149,13 @@ Benchmark: `results/bench/attention.json`. Flash SDPA is not in the Windows PyTo
 The draft weights live in `models/Qwen2.5-0.5B-Instruct` (git-ignored; the C: drive was full) and are found
 by `settings.model_source`. Qwen's `generation_config` has `repetition_penalty 1.1`: pass
 `repetition_penalty=1.0` to `generate` when pure greedy is meant. Details in `speculative.md`.
+
+## App backend
+
+`src/app/` (FastAPI): `main.create_app(engine=None)` (tests inject a stand-in engine),
+`engine.Engine` (merged adapter, lazy draft, GPU lock), `screening` (split / prompt / parse /
+explain / ADR 0002 rule), `bench`, `report`. `task app` → :8000/docs. CORS allows the Vite dev
+server on :5173 (TRIA-13). Details in `app.md`.
 
 ## Evaluation
 

@@ -26,8 +26,9 @@ GenAI Assignment 2 · dataset: [TrialGPT Criterion Annotations](https://huggingf
 | Final test + error analysis | TRIA-8 | done |
 | KV cache (own decoder, equivalence, benchmark) | TRIA-9 | done |
 | Tiled online-softmax attention | TRIA-10 | done |
-| Speculative decoding | TRIA-11 | in review |
-| App | TRIA-12, 13 | not started |
+| Speculative decoding | TRIA-11 | done |
+| App backend (FastAPI) | TRIA-12 | in review |
+| App frontend | TRIA-13 | not started |
 | Paper and submission | TRIA-14, 15 | not started |
 
 ## Requirements
@@ -177,6 +178,22 @@ model's own greedy output (all task prompts at every γ; the one free-text misma
 tie). On this laptop it is **slower** (0.59–0.97×) even though 74–91% of guesses are accepted. Our
 runner makes a 0.5B token cost 85% of a 1.5B token, and the doc measures why. Details:
 [docs/domain/trialmatch/speculative.md](docs/domain/trialmatch/speculative.md).
+
+## App backend (TRIA-12)
+
+```bash
+task app        # API on http://localhost:8000 — open /docs to try every endpoint
+```
+
+- **`POST /screen`:** takes any patient note plus inclusion/exclusion criteria, with a choice of
+  decoder (no cache, KV cache, speculative). It returns, per criterion, the label, the cited
+  sentences, an explanation built from them, and a missing-info flag, plus a preliminary overall
+  outcome from an explicit rule (not a clinical decision).
+- **`POST /benchmark`:** runs the same input through all three decoders live.
+- **`POST /attention-bench`:** a live run of the attention comparison.
+- **`POST /report`:** downloads an HTML/Markdown report with provenance.
+
+Details: [docs/domain/trialmatch/app.md](docs/domain/trialmatch/app.md).
 
 ## Models
 

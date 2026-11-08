@@ -17,10 +17,10 @@ def _sync() -> float:
     return time.perf_counter()
 
 
-def greedy_no_cache(runner: Runner, ids: torch.Tensor, n: int, attn_fn=attention) -> dict:
+def greedy_no_cache(runner: Runner, ids: torch.Tensor, n: int, eos: int | None = None, attn_fn=attention) -> dict:
     seq, out, t0 = ids, [], _sync()
     prefill = None
-    for _ in range(n):
+    while len(out) < n and (not out or out[-1] != eos):
         cache = runner.new_cache(seq.shape[0])
         nxt = runner.forward(seq, cache, attn_fn=attn_fn)[-1].argmax()
         out.append(int(nxt))
