@@ -22,7 +22,8 @@ GenAI Assignment 2 · dataset: [TrialGPT Criterion Annotations](https://huggingf
 | Prompt format and token lengths | TRIA-4 | done |
 | Evaluation metrics | TRIA-5 | done |
 | Untrained baseline (val) | TRIA-6 | done |
-| Training, final test | TRIA-7, 8 | not started |
+| QLoRA training sweep (val) | TRIA-7 | in review |
+| Final test | TRIA-8 | not started |
 | KV cache, tiled attention, speculative decoding | TRIA-9 to 11 | not started |
 | App | TRIA-12, 13 | not started |
 | Paper and submission | TRIA-14, 15 | not started |
@@ -95,6 +96,24 @@ Unparseable answers are counted as errors, never guessed. Conventions:
 | Model | Accuracy | Macro-F1 | Evidence micro-F1 |
 | --- | --- | --- | --- |
 | Qwen2.5-1.5B-Instruct, untrained (greedy, fp16) | 0.068 | 0.081 | 0.134 |
+| + QLoRA adapter (run C, epoch 4; greedy, fp16) | 0.738 | 0.527 | 0.508 |
+
+```bash
+task train         # 4 QLoRA configs x 5 epochs (~4.5 h on an RTX 3050)
+task train-report  # comparison table + curves from finished runs
+```
+
+The fine-tuned adapter is public on the Hugging Face Hub:
+[Aduhere/trialmatch-qwen2.5-1.5b-qlora](https://huggingface.co/Aduhere/trialmatch-qwen2.5-1.5b-qlora).
+To use it without training:
+
+```bash
+task adapter-download   # -> checkpoints/final/ (no login needed)
+uv run python -m src.finetune.predict --split val --run finetuned_val --adapter checkpoints/final
+```
+
+The label-weighted run won on validation macro-F1. Run comparison and
+analysis: [docs/domain/trialmatch/finetune.md](docs/domain/trialmatch/finetune.md).
 
 ```bash
 task baseline   # re-runs the untrained model on val (~1 min on an RTX 3050)

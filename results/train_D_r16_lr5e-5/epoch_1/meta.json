@@ -1,0 +1,13 @@
+{
+  "split": "val",
+  "limit": null,
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "adapter": "checkpoints/D_r16_lr5e-5/epoch_1",
+  "precision": "nf4 (in-training)",
+  "decoding": {
+    "strategy": "greedy",
+    "max_new_tokens": 64,
+    "batch_size": 8,
+    "padding": "left"
+  }
+}

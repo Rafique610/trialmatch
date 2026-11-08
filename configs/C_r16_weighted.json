@@ -1,0 +1,12 @@
+﻿{
+    "lr":  0.0002,
+    "seed":  42,
+    "note":  "rank 16 + inverse-sqrt label weights for rare classes",
+    "grad_accum":  8,
+    "epochs":  5,
+    "dropout":  0.05,
+    "name":  "C_r16_weighted",
+    "alpha":  32,
+    "rank":  16,
+    "class_weighting":  true
+}

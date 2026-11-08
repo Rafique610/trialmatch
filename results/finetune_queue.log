@@ -1,0 +1,8 @@
+2026-11-07 22:58 start configs/A_r16.json
+2026-11-08 00:21 end configs/A_r16.json exit=0 minutes=83
+2026-11-08 00:21 start configs/C_r16_weighted.json
+2026-11-08 01:21 end configs/C_r16_weighted.json exit=0 minutes=59
+2026-11-08 01:21 start configs/B_r8.json
+2026-11-08 02:18 end configs/B_r8.json exit=0 minutes=58
+2026-11-08 02:18 start configs/D_r16_lr5e-5.json
+2026-11-08 03:17 end configs/D_r16_lr5e-5.json exit=0 minutes=59

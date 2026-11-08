@@ -1,0 +1,78 @@
+{
+  "config": {
+    "lr": 0.0002,
+    "seed": 42,
+    "note": "rank 16 + inverse-sqrt label weights for rare classes",
+    "grad_accum": 8,
+    "epochs": 5,
+    "dropout": 0.05,
+    "name": "C_r16_weighted",
+    "alpha": 32,
+    "rank": 16,
+    "class_weighting": true
+  },
+  "trainable_params": 18464768,
+  "train_rows": 603,
+  "epochs": [
+    {
+      "epoch": 1,
+      "train_seconds": 554,
+      "val_loss": 0.1447,
+      "val_accuracy": 0.6214,
+      "val_macro_f1": 0.5082,
+      "val_incl_macro_f1": 0.2193,
+      "val_excl_macro_f1": 0.5785,
+      "val_evidence_micro_f1": 0.4556,
+      "val_parse_errors": 0,
+      "peak_gpu_gb": 2.99
+    },
+    {
+      "epoch": 2,
+      "train_seconds": 517,
+      "val_loss": 0.1203,
+      "val_accuracy": 0.733,
+      "val_macro_f1": 0.43,
+      "val_incl_macro_f1": 0.3833,
+      "val_excl_macro_f1": 0.3463,
+      "val_evidence_micro_f1": 0.4261,
+      "val_parse_errors": 0,
+      "peak_gpu_gb": 2.99
+    },
+    {
+      "epoch": 3,
+      "train_seconds": 501,
+      "val_loss": 0.1358,
+      "val_accuracy": 0.7379,
+      "val_macro_f1": 0.5537,
+      "val_incl_macro_f1": 0.3937,
+      "val_excl_macro_f1": 0.591,
+      "val_evidence_micro_f1": 0.5965,
+      "val_parse_errors": 0,
+      "peak_gpu_gb": 2.99
+    },
+    {
+      "epoch": 4,
+      "train_seconds": 510,
+      "val_loss": 0.1594,
+      "val_accuracy": 0.7573,
+      "val_macro_f1": 0.5716,
+      "val_incl_macro_f1": 0.3906,
+      "val_excl_macro_f1": 0.622,
+      "val_evidence_micro_f1": 0.5172,
+      "val_parse_errors": 0,
+      "peak_gpu_gb": 2.99
+    },
+    {
+      "epoch": 5,
+      "train_seconds": 539,
+      "val_loss": 0.1689,
+      "val_accuracy": 0.7524,
+      "val_macro_f1": 0.5693,
+      "val_incl_macro_f1": 0.3885,
+      "val_excl_macro_f1": 0.622,
+      "val_evidence_micro_f1": 0.5493,
+      "val_parse_errors": 0,
+      "peak_gpu_gb": 2.99
+    }
+  ]
+}

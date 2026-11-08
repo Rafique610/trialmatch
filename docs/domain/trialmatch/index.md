@@ -95,7 +95,8 @@ tokens, nothing truncated).
 | TRIA-4 Prompt + lengths | done |
 | TRIA-5 Evaluation metrics | done |
 | TRIA-6 Baseline on val | done |
-| TRIA-7 to 15 | backlog |
+| TRIA-7 Fine-tune sweep | in review |
+| TRIA-8 to 15 | backlog |
 
 ## Baseline
 
@@ -104,6 +105,16 @@ accuracy 0.068 and macro-F1 0.081: correct JSON, but label collapse and
 inverted exclusion polarity. Details in `baseline.md`. The predictor
 `src/finetune/predict.py` (`--split`, `--run`, `--adapter`, `--limit`) is
 reused by TRIA-7 and TRIA-8.
+
+## Fine-tuning
+
+`task train` runs the 4-config QLoRA sweep; `task train-report` compares
+the runs. The chosen adapter is `checkpoints/C_r16_weighted/epoch_4`
+(label-weighted, r16, lr 2e-4), picked by val macro-F1 and never by test.
+With fp16 + the adapter it scores val acc 0.738, macro-F1 0.527, evidence
+micro-F1 0.508 (`results/finetuned_val/`). Published as
+`Aduhere/trialmatch-qwen2.5-1.5b-qlora` (`task adapter-download` → `checkpoints/final/`).
+Details in `finetune.md`.
 
 ## Evaluation
 

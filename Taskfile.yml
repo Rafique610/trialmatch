@@ -41,9 +41,27 @@ tasks:
       - uv run python -m src.finetune.predict --split val --run baseline_val
 
   train:
-    desc: QLoRA fine-tuning (TRIA-7)
+    desc: QLoRA sweep of every config in configs/ (5 epochs each, ~1 h per config on an RTX 3050), then the comparison table (TRIA-7)
+    env:
+      HF_HUB_OFFLINE: "1"
+      HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
     cmds:
-      - echo "not built yet — TRIA-7"
+      - uv run python -m src.finetune.sweep configs/A_r16.json configs/C_r16_weighted.json configs/B_r8.json configs/D_r16_lr5e-5.json
+
+  train-report:
+    desc: Rebuild results/finetune_runs.md and the validation curves from finished runs (TRIA-7)
+    cmds:
+      - uv run python -m src.finetune.sweep --report
+
+  adapter-upload:
+    desc: "Publish the chosen adapter + model card: task adapter-upload -- <user>/<repo> (needs hf auth login) (TRIA-7)"
+    cmds:
+      - uv run python -m scripts.upload_adapter {{.CLI_ARGS}}
+
+  adapter-download:
+    desc: Download the published adapter into checkpoints/final/ (TRIA-7)
+    cmds:
+      - uv run python -m scripts.download_adapter {{.CLI_ARGS}}
 
   eval:
     desc: "Score a run folder: task eval -- results/<run> (TRIA-5)"

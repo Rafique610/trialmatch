@@ -1,0 +1,12 @@
+﻿{
+    "lr":  5E-05,
+    "seed":  42,
+    "note":  "lower learning rate",
+    "grad_accum":  8,
+    "epochs":  5,
+    "dropout":  0.05,
+    "name":  "D_r16_lr5e-5",
+    "alpha":  32,
+    "rank":  16,
+    "class_weighting":  false
+}

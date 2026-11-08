@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     dataset_revision: str = "1cfcafde94a1560a33b4addc1638664fe28fc059"  # pinned so the split never shifts
     target_model_id: str = "Qwen/Qwen2.5-1.5B-Instruct"
     draft_model_id: str = "Qwen/Qwen2.5-0.5B-Instruct"
-    adapter_repo_id: str = ""  # filled in by TRIA-7 once the adapter is uploaded
+    adapter_repo_id: str = "Aduhere/trialmatch-qwen2.5-1.5b-qlora"  # chosen adapter (TRIA-7)
 
     split_seed: int = 42
     split_sizes: tuple[int, int, int] = (37, 8, 8)

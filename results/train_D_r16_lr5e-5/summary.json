@@ -1,0 +1,78 @@
+{
+  "config": {
+    "lr": 5e-05,
+    "seed": 42,
+    "note": "lower learning rate",
+    "grad_accum": 8,
+    "epochs": 5,
+    "dropout": 0.05,
+    "name": "D_r16_lr5e-5",
+    "alpha": 32,
+    "rank": 16,
+    "class_weighting": false
+  },
+  "trainable_params": 18464768,
+  "train_rows": 603,
+  "epochs": [
+    {
+      "epoch": 1,
+      "train_seconds": 513,
+      "val_loss": 0.1512,
+      "val_accuracy": 0.6796,
+      "val_macro_f1": 0.3298,
+      "val_incl_macro_f1": 0.3421,
+      "val_excl_macro_f1": 0.2095,
+      "val_evidence_micro_f1": 0.4224,
+      "val_parse_errors": 0,
+      "peak_gpu_gb": 2.99
+    },
+    {
+      "epoch": 2,
+      "train_seconds": 511,
+      "val_loss": 0.126,
+      "val_accuracy": 0.7233,
+      "val_macro_f1": 0.355,
+      "val_incl_macro_f1": 0.3751,
+      "val_excl_macro_f1": 0.2095,
+      "val_evidence_micro_f1": 0.4596,
+      "val_parse_errors": 0,
+      "peak_gpu_gb": 2.99
+    },
+    {
+      "epoch": 3,
+      "train_seconds": 541,
+      "val_loss": 0.1269,
+      "val_accuracy": 0.7573,
+      "val_macro_f1": 0.5192,
+      "val_incl_macro_f1": 0.3744,
+      "val_excl_macro_f1": 0.5234,
+      "val_evidence_micro_f1": 0.576,
+      "val_parse_errors": 0,
+      "peak_gpu_gb": 2.99
+    },
+    {
+      "epoch": 4,
+      "train_seconds": 566,
+      "val_loss": 0.1355,
+      "val_accuracy": 0.7621,
+      "val_macro_f1": 0.5242,
+      "val_incl_macro_f1": 0.383,
+      "val_excl_macro_f1": 0.5405,
+      "val_evidence_micro_f1": 0.5703,
+      "val_parse_errors": 1,
+      "peak_gpu_gb": 2.99
+    },
+    {
+      "epoch": 5,
+      "train_seconds": 569,
+      "val_loss": 0.1378,
+      "val_accuracy": 0.7573,
+      "val_macro_f1": 0.5284,
+      "val_incl_macro_f1": 0.3672,
+      "val_excl_macro_f1": 0.5602,
+      "val_evidence_micro_f1": 0.5747,
+      "val_parse_errors": 1,
+      "peak_gpu_gb": 2.99
+    }
+  ]
+}
