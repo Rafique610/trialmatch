@@ -1,7 +1,9 @@
 """Run a model (optionally with a LoRA adapter) over a split and write a scored run folder.
 
 Reused for the baseline (TRIA-6), checkpoint selection (TRIA-7) and the final test (TRIA-8).
-Decoding is greedy; batches are left-padded. Every setting is written to meta.json.
+Decoding is greedy argmax; batches are left-padded. Every setting is written to meta.json.
+Qwen's generation_config.json sets repetition_penalty=1.1, which `generate` applies unless overridden.
+TRIA-6/7/8 ran with it (the default here, so those runs reproduce); pass --repetition-penalty 1.0 for pure greedy.
 Run: uv run python -m src.finetune.predict --split val --run baseline_val [--adapter DIR] [--limit N]
 """
 
@@ -31,7 +33,7 @@ def load(adapter: str | None):
 
 
 @torch.inference_mode()
-def generate(tok, model, records: list[dict], batch_size: int, max_new_tokens: int) -> list[str]:
+def generate(tok, model, records: list[dict], batch_size: int, max_new_tokens: int, repetition_penalty: float = 1.1) -> list[str]:
     outputs = []
     for start in range(0, len(records), batch_size):
         batch = records[start : start + batch_size]
@@ -40,6 +42,7 @@ def generate(tok, model, records: list[dict], batch_size: int, max_new_tokens: i
         out = model.generate(
             **enc, do_sample=False, max_new_tokens=max_new_tokens, pad_token_id=tok.pad_token_id,
             temperature=None, top_p=None, top_k=None,  # greedy: clear the sampling defaults in generation_config
+            repetition_penalty=repetition_penalty,  # 1.1 = the model's generation_config default; 1.0 = pure greedy
         )
         outputs += tok.batch_decode(out[:, enc["input_ids"].shape[1] :], skip_special_tokens=True)
         print(f"  {min(start + batch_size, len(records))}/{len(records)}", flush=True)
@@ -54,6 +57,7 @@ def main() -> None:
     ap.add_argument("--batch-size", type=int, default=8)
     ap.add_argument("--max-new-tokens", type=int, default=64)
     ap.add_argument("--limit", type=int, default=None, help="only the first N rows (smoke test)")
+    ap.add_argument("--repetition-penalty", type=float, default=1.1, help="1.1 = model default used in TRIA-6/7/8; 1.0 = pure greedy")
     args = ap.parse_args()
 
     records = read_jsonl(settings.data_dir / "processed" / f"{args.split}.jsonl")[: args.limit]
@@ -63,7 +67,7 @@ def main() -> None:
     tok, model = load(args.adapter)
     torch.cuda.reset_peak_memory_stats()
     t0 = time.perf_counter()
-    raw = generate(tok, model, records, args.batch_size, args.max_new_tokens)
+    raw = generate(tok, model, records, args.batch_size, args.max_new_tokens, args.repetition_penalty)
     torch.cuda.synchronize()
     seconds = time.perf_counter() - t0
 
@@ -78,7 +82,7 @@ def main() -> None:
     meta = {
         "split": args.split, "rows": len(records), "limit": args.limit,
         "model": settings.target_model_id, "adapter": args.adapter, "precision": "fp16",
-        "decoding": {"strategy": "greedy", "max_new_tokens": args.max_new_tokens, "batch_size": args.batch_size,
+        "decoding": {"strategy": "greedy", "repetition_penalty": args.repetition_penalty, "max_new_tokens": args.max_new_tokens, "batch_size": args.batch_size,
                      "padding": "left", "implementation": "transformers generate"},
         "prompt": "src/data/prompt.py", "seconds": round(seconds, 1),
         "peak_gpu_memory_gb": round(torch.cuda.max_memory_allocated() / 1024**3, 2),

@@ -100,6 +100,10 @@ Unparseable answers are counted as errors, never guessed. Conventions:
 | Qwen2.5-1.5B-Instruct, untrained (greedy, fp16) | 0.068 | 0.081 | 0.134 |
 | + QLoRA adapter (run C, epoch 4; greedy, fp16) | 0.738 | 0.527 | 0.508 |
 
+These runs used `transformers.generate`, which also applied Qwen's default repetition penalty
+(1.1). Pure greedy gives the same labels; only the cited evidence shifts (fine-tuned 0.508 → 0.547).
+See the decoding note in [finetune.md](docs/domain/trialmatch/finetune.md).
+
 ```bash
 task train         # 4 QLoRA configs x 5 epochs (~4.5 h on an RTX 3050)
 task train-report  # comparison table + curves from finished runs
@@ -128,6 +132,7 @@ criterion type and reads exclusion backwards. See
 ## Final test (206 criteria, run once)
 
 Settings were frozen in [results/test_protocol.md](results/test_protocol.md) before the run.
+Decoding was greedy with Qwen's default repetition penalty 1.1, for both models (see the correction note in the protocol).
 
 | Model | Accuracy | Macro-F1 | Incl macro-F1 | Excl macro-F1 | Evidence micro-F1 |
 | --- | --- | --- | --- | --- | --- |

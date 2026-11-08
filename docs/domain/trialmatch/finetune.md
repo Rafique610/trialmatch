@@ -23,7 +23,7 @@ and `src/finetune/sweep.py` (queue + comparison). Configs: `configs/*.json`.
    8 rows, `not included` 13) count more.
 6. **Every epoch:** teacher-forced validation loss; save the adapter to
    `checkpoints/<run>/epoch_<k>/`; greedy-decode the validation split with the
-   in-memory 4-bit model and score it with `src/eval` →
+   in-memory 4-bit model (repetition penalty 1.1, see *Decoding note*) and score it with `src/eval` →
    `results/train_<run>/epoch_<k>/`.
 7. **Selection.** Best run and epoch by validation macro-F1. Test is never
    used. The chosen adapter is then re-scored on validation with the shipped
@@ -107,3 +107,30 @@ val. fp16 predicts it 6 times (recall 1.0, precision 0.33); 4-bit predicts
 it once (precision 1.0, recall 0.5). With so few rows, one prediction moves
 that class's F1 by about 0.2, so the gap is within noise for a split this
 small. fp16 inference: 97 s for 206 rows, peak 3.48 GB.
+
+## Decoding note: repetition penalty
+
+Found in TRIA-11: Qwen's `generation_config.json` sets `repetition_penalty: 1.1`, and
+`transformers.generate` applies it unless the call overrides it. Ours didn't, so **every
+`generate`-based evaluation (TRIA-6 baseline, TRIA-7 epoch scoring and re-score, TRIA-8 test)
+was greedy with a 1.1 repetition penalty**, not pure greedy as first written. Base and fine-tuned
+models always got the same setting, so every comparison is like for like. `predict.py` now takes
+`--repetition-penalty` (default 1.1, so the recorded runs reproduce) and writes it into `meta.json`.
+
+Measured on validation only (the test split was not reopened):
+
+| Model (val, 206) | Penalty | Acc | Macro-F1 | Evidence micro P / R / F1 | Ids cited |
+| --- | --- | --- | --- | --- | --- |
+| Untrained | 1.1 (`baseline_val`) | 0.068 | 0.081 | 0.088 / 0.278 / 0.134 | 363 |
+| Untrained | 1.0 (`baseline_val_greedy`) | 0.068 | 0.081 | 0.053 / 0.339 / 0.091 | 739 |
+| Fine-tuned | 1.1 (`finetuned_val`) | 0.738 | 0.527 | 0.444 / 0.591 / 0.508 | 153 |
+| Fine-tuned | 1.0 (`finetuned_val_greedy`) | 0.738 | 0.527 | 0.497 / 0.609 / 0.547 | 141 |
+
+- **No label changes** (0/206 rows for either model), so accuracy, macro-F1 and the checkpoint
+  choice are unaffected.
+- **Only the evidence lists change** (46 rows fine-tuned, 115 untrained). The penalty discourages
+  tokens that already appear in the prompt, which includes the sentence numbers. For the fine-tuned
+  model, pure greedy cites a little less and more precisely (+0.04 F1). The untrained model, without
+  the penalty, cites twice as many sentences (−0.04 F1).
+- The app and our own decoders (TRIA-9/11) use pure greedy, so their evidence matches the
+  `*_greedy` rows. The test numbers remain the penalty-1.1 results, reported as such.

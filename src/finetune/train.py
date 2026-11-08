@@ -83,7 +83,7 @@ def score_epoch(model, gen_tok, val: list[dict], run_dir, epoch: int, cfg: dict)
     (out / "predictions.jsonl").write_text("".join(json.dumps(x) + "\n" for x in rows), encoding="utf-8")
     meta = {"split": "val", "limit": len(val) if cfg.get("smoke") else None, "model": settings.target_model_id,
             "adapter": f"checkpoints/{cfg['name']}/epoch_{epoch}", "precision": "nf4 (in-training)",
-            "decoding": {"strategy": "greedy", "max_new_tokens": 64, "batch_size": 8, "padding": "left"}}
+            "decoding": {"strategy": "greedy", "repetition_penalty": 1.1, "max_new_tokens": 64, "batch_size": 8, "padding": "left"}}
     (out / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
     return evaluate(out)
 

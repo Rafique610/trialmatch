@@ -9,7 +9,7 @@ Run: `task baseline` → `results/baseline_val/` (`meta.json`,
 | --- | --- |
 | Model | `Qwen/Qwen2.5-1.5B-Instruct`, fp16, no adapter |
 | Prompt | `src/data/prompt.py`, the same prompt fine-tuning uses |
-| Decoding | greedy, `max_new_tokens=64`, batch 8, left padding, `transformers.generate` |
+| Decoding | greedy, `max_new_tokens=64`, batch 8, left padding, `transformers.generate`, **`repetition_penalty=1.1`** (Qwen's `generation_config` default, not overridden; found in TRIA-11). Pure greedy on the same split gives identical labels: `results/baseline_val_greedy/` |
 | Split | val: 8 patients, 206 criteria |
 | Time / memory | 206 rows in 50 s; peak GPU memory 3.21 GB (RTX 3050 6 GB) |
 

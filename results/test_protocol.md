@@ -28,6 +28,9 @@ The checkpoint was chosen by validation macro-F1 (`results/finetune_runs.md`).
 
 - Prompt: `src/data/prompt.py` (system message + numbered sentences + criterion), chat template, generation prompt.
 - Precision fp16, greedy decoding, `max_new_tokens=64`, batch 8, left padding, `transformers.generate`.
+  *(Correction, 8 Nov 2026, after the run: `generate` also applied `repetition_penalty=1.1` from Qwen's
+  `generation_config.json`, which the call did not override. Both test runs used it, so the comparison is like for like.
+  The test was **not** re-run. On validation, pure greedy (`--repetition-penalty 1.0`) gives **identical labels on all 206 rows** for both models; only cited evidence changes (fine-tuned evidence micro-F1 0.508 → 0.547, base 0.134 → 0.091). See `finetune.md` → *Decoding note*.)*
 - Answer parsing: `parse_output` in `src/data/prompt.py`. Unparseable output counts as a `parse_error`, never guessed.
 
 ## Metrics

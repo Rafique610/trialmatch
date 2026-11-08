@@ -27,6 +27,9 @@
 - Never silently drop or remap unparseable outputs: count them as errors.
 - Never treat absent evidence as proof of either outcome.
 - State how empty gold / empty predicted sets are scored.
+- Pass every decoding parameter explicitly and record it in the run's metadata.
+  A model's `generation_config.json` can carry defaults (e.g. `repetition_penalty`)
+  that `generate` applies silently, so "greedy" must mean what the call actually did.
 
 ## Benchmarks
 

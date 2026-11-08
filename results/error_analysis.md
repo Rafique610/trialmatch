@@ -1,6 +1,6 @@
 # Error analysis · fine-tuned model on the test split
 
-Model: Qwen2.5-1.5B-Instruct + adapter `Aduhere/trialmatch-qwen2.5-1.5b-qlora`, fp16, greedy
+Model: Qwen2.5-1.5B-Instruct + adapter `Aduhere/trialmatch-qwen2.5-1.5b-qlora`, fp16, greedy with the model's default repetition penalty 1.1
 (`results/finetuned_test/`, protocol in `results/test_protocol.md`). 206 test criteria,
 60 wrong labels (accuracy 0.709), 0 parse errors. Sentence ids are the note's own numbering
 (`[k]`). `G` = cited by the expert, `P` = cited by the model. Per-row data:
