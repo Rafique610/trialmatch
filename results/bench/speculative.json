@@ -1,0 +1,461 @@
+{
+  "target": "Qwen/Qwen2.5-1.5B-Instruct",
+  "draft": "Qwen/Qwen2.5-0.5B-Instruct",
+  "adapter": "Aduhere/trialmatch-qwen2.5-1.5b-qlora",
+  "precision": "fp16",
+  "gpu": "NVIDIA GeForce RTX 3050 6GB Laptop GPU",
+  "repeats": 3,
+  "warmup": 1,
+  "hf_assisted_reference": {
+    "prompts": 5,
+    "hf_assisted_equals_hf_greedy": 5,
+    "ours_equals_hf_greedy": 5,
+    "ours_speculative_equals_hf_assisted": 5
+  },
+  "workloads": [
+    {
+      "workload": "task, fine-tuned target",
+      "prompts": 20,
+      "max_new_tokens": 64,
+      "mean_prompt_tokens": 338.8,
+      "baseline": {
+        "seconds": 17.0927,
+        "seconds_std": 0.023,
+        "tokens": 339,
+        "tok_s": 19.8331,
+        "peak_gb": 3.8431,
+        "target_decode_ms_per_token": 46.51
+      },
+      "gammas": [
+        {
+          "gamma": 1,
+          "seconds": 18.4689,
+          "seconds_std": 0.1665,
+          "tok_s": 18.36,
+          "speedup": 0.925,
+          "peak_gb": 3.848,
+          "acceptance_rate": 0.8686,
+          "mean_accepted_per_round": 0.869,
+          "tokens_per_round": 1.738,
+          "rounds": 175,
+          "accepted_histogram": [
+            23,
+            152
+          ],
+          "draft_ms_per_round": 39.77,
+          "verify_ms_per_round": 47.47,
+          "outputs_identical_to_greedy": "20/20"
+        },
+        {
+          "gamma": 2,
+          "seconds": 20.602,
+          "seconds_std": 0.0725,
+          "tok_s": 16.45,
+          "speedup": 0.83,
+          "peak_gb": 3.848,
+          "acceptance_rate": 0.7717,
+          "mean_accepted_per_round": 1.543,
+          "tokens_per_round": 2.146,
+          "rounds": 138,
+          "accepted_histogram": [
+            26,
+            11,
+            101
+          ],
+          "draft_ms_per_round": 78.16,
+          "verify_ms_per_round": 46.94,
+          "outputs_identical_to_greedy": "20/20"
+        },
+        {
+          "gamma": 3,
+          "seconds": 20.8596,
+          "seconds_std": 0.1088,
+          "tok_s": 16.25,
+          "speedup": 0.819,
+          "peak_gb": 3.848,
+          "acceptance_rate": 0.81,
+          "mean_accepted_per_round": 2.43,
+          "tokens_per_round": 2.669,
+          "rounds": 107,
+          "accepted_histogram": [
+            19,
+            0,
+            4,
+            84
+          ],
+          "draft_ms_per_round": 117.12,
+          "verify_ms_per_round": 46.98,
+          "outputs_identical_to_greedy": "20/20"
+        },
+        {
+          "gamma": 4,
+          "seconds": 21.4973,
+          "seconds_std": 0.0839,
+          "tok_s": 15.77,
+          "speedup": 0.795,
+          "peak_gb": 3.848,
+          "acceptance_rate": 0.7444,
+          "mean_accepted_per_round": 2.978,
+          "tokens_per_round": 3.11,
+          "rounds": 89,
+          "accepted_histogram": [
+            14,
+            5,
+            6,
+            8,
+            56
+          ],
+          "draft_ms_per_round": 158.88,
+          "verify_ms_per_round": 47.26,
+          "outputs_identical_to_greedy": "20/20"
+        },
+        {
+          "gamma": 6,
+          "seconds": 24.9281,
+          "seconds_std": 0.1516,
+          "tok_s": 13.6,
+          "speedup": 0.686,
+          "peak_gb": 3.848,
+          "acceptance_rate": 0.6496,
+          "mean_accepted_per_round": 3.897,
+          "tokens_per_round": 3.459,
+          "rounds": 78,
+          "accepted_histogram": [
+            20,
+            0,
+            0,
+            8,
+            6,
+            8,
+            36
+          ],
+          "draft_ms_per_round": 229.07,
+          "verify_ms_per_round": 49.77,
+          "outputs_identical_to_greedy": "20/20"
+        },
+        {
+          "gamma": 8,
+          "seconds": 28.8797,
+          "seconds_std": 0.3199,
+          "tok_s": 11.74,
+          "speedup": 0.592,
+          "peak_gb": 3.848,
+          "acceptance_rate": 0.5933,
+          "mean_accepted_per_round": 4.746,
+          "tokens_per_round": 3.725,
+          "rounds": 71,
+          "accepted_histogram": [
+            14,
+            0,
+            1,
+            8,
+            5,
+            13,
+            4,
+            6,
+            20
+          ],
+          "draft_ms_per_round": 309.29,
+          "verify_ms_per_round": 48.6,
+          "outputs_identical_to_greedy": "20/20"
+        }
+      ]
+    },
+    {
+      "workload": "task, base target",
+      "prompts": 20,
+      "max_new_tokens": 64,
+      "mean_prompt_tokens": 338.8,
+      "baseline": {
+        "seconds": 28.1313,
+        "seconds_std": 0.294,
+        "tokens": 583,
+        "tok_s": 20.7242,
+        "peak_gb": 3.8431,
+        "target_decode_ms_per_token": 46.31
+      },
+      "gammas": [
+        {
+          "gamma": 1,
+          "seconds": 29.1249,
+          "seconds_std": 0.1084,
+          "tok_s": 20.02,
+          "speedup": 0.966,
+          "peak_gb": 3.848,
+          "acceptance_rate": 0.9088,
+          "mean_accepted_per_round": 0.909,
+          "tokens_per_round": 1.845,
+          "rounds": 296,
+          "accepted_histogram": [
+            27,
+            269
+          ],
+          "draft_ms_per_round": 40.29,
+          "verify_ms_per_round": 47.27,
+          "outputs_identical_to_greedy": "20/20"
+        },
+        {
+          "gamma": 2,
+          "seconds": 30.0858,
+          "seconds_std": 0.202,
+          "tok_s": 19.38,
+          "speedup": 0.935,
+          "peak_gb": 3.848,
+          "acceptance_rate": 0.8756,
+          "mean_accepted_per_round": 1.751,
+          "tokens_per_round": 2.502,
+          "rounds": 213,
+          "accepted_histogram": [
+            22,
+            9,
+            182
+          ],
+          "draft_ms_per_round": 78.39,
+          "verify_ms_per_round": 47.08,
+          "outputs_identical_to_greedy": "20/20"
+        },
+        {
+          "gamma": 3,
+          "seconds": 30.171,
+          "seconds_std": 0.127,
+          "tok_s": 19.32,
+          "speedup": 0.932,
+          "peak_gb": 3.848,
+          "acceptance_rate": 0.9027,
+          "mean_accepted_per_round": 2.708,
+          "tokens_per_round": 3.221,
+          "rounds": 161,
+          "accepted_histogram": [
+            10,
+            0,
+            17,
+            134
+          ],
+          "draft_ms_per_round": 119.42,
+          "verify_ms_per_round": 48.34,
+          "outputs_identical_to_greedy": "20/20"
+        },
+        {
+          "gamma": 4,
+          "seconds": 31.8642,
+          "seconds_std": 0.4389,
+          "tok_s": 18.3,
+          "speedup": 0.883,
+          "peak_gb": 3.848,
+          "acceptance_rate": 0.8309,
+          "mean_accepted_per_round": 3.324,
+          "tokens_per_round": 3.667,
+          "rounds": 139,
+          "accepted_histogram": [
+            9,
+            14,
+            8,
+            0,
+            108
+          ],
+          "draft_ms_per_round": 161.02,
+          "verify_ms_per_round": 48.44,
+          "outputs_identical_to_greedy": "20/20"
+        },
+        {
+          "gamma": 6,
+          "seconds": 34.513,
+          "seconds_std": 0.3983,
+          "tok_s": 16.89,
+          "speedup": 0.815,
+          "peak_gb": 3.848,
+          "acceptance_rate": 0.797,
+          "mean_accepted_per_round": 4.782,
+          "tokens_per_round": 4.485,
+          "rounds": 110,
+          "accepted_histogram": [
+            21,
+            0,
+            1,
+            0,
+            0,
+            4,
+            84
+          ],
+          "draft_ms_per_round": 233.67,
+          "verify_ms_per_round": 48.53,
+          "outputs_identical_to_greedy": "20/20"
+        },
+        {
+          "gamma": 8,
+          "seconds": 34.0734,
+          "seconds_std": 0.1489,
+          "tok_s": 17.11,
+          "speedup": 0.826,
+          "peak_gb": 3.848,
+          "acceptance_rate": 0.7922,
+          "mean_accepted_per_round": 6.337,
+          "tokens_per_round": 5.5,
+          "rounds": 86,
+          "accepted_histogram": [
+            9,
+            0,
+            0,
+            0,
+            0,
+            10,
+            16,
+            9,
+            42
+          ],
+          "draft_ms_per_round": 308.99,
+          "verify_ms_per_round": 48.0,
+          "outputs_identical_to_greedy": "20/20"
+        }
+      ]
+    },
+    {
+      "workload": "summary, base target",
+      "prompts": 8,
+      "max_new_tokens": 128,
+      "mean_prompt_tokens": 186.9,
+      "baseline": {
+        "seconds": 43.9782,
+        "seconds_std": 0.2258,
+        "tokens": 941,
+        "tok_s": 21.397,
+        "peak_gb": 3.8307,
+        "target_decode_ms_per_token": 46.83
+      },
+      "gammas": [
+        {
+          "gamma": 1,
+          "seconds": 45.9372,
+          "seconds_std": 0.4719,
+          "tok_s": 20.48,
+          "speedup": 0.957,
+          "peak_gb": 3.835,
+          "acceptance_rate": 0.8246,
+          "mean_accepted_per_round": 0.825,
+          "tokens_per_round": 1.806,
+          "rounds": 513,
+          "accepted_histogram": [
+            90,
+            423
+          ],
+          "draft_ms_per_round": 40.0,
+          "verify_ms_per_round": 48.11,
+          "outputs_identical_to_greedy": "7/8"
+        },
+        {
+          "gamma": 2,
+          "seconds": 47.548,
+          "seconds_std": 0.2847,
+          "tok_s": 19.79,
+          "speedup": 0.925,
+          "peak_gb": 3.835,
+          "acceptance_rate": 0.7775,
+          "mean_accepted_per_round": 1.553,
+          "tokens_per_round": 2.496,
+          "rounds": 369,
+          "accepted_histogram": [
+            55,
+            55,
+            259
+          ],
+          "draft_ms_per_round": 79.22,
+          "verify_ms_per_round": 48.04,
+          "outputs_identical_to_greedy": "8/8"
+        },
+        {
+          "gamma": 3,
+          "seconds": 50.4579,
+          "seconds_std": 0.3025,
+          "tok_s": 18.65,
+          "speedup": 0.872,
+          "peak_gb": 3.835,
+          "acceptance_rate": 0.7132,
+          "mean_accepted_per_round": 2.132,
+          "tokens_per_round": 3.035,
+          "rounds": 302,
+          "accepted_histogram": [
+            54,
+            31,
+            38,
+            179
+          ],
+          "draft_ms_per_round": 116.81,
+          "verify_ms_per_round": 47.08,
+          "outputs_identical_to_greedy": "8/8"
+        },
+        {
+          "gamma": 4,
+          "seconds": 53.8301,
+          "seconds_std": 0.7686,
+          "tok_s": 17.48,
+          "speedup": 0.817,
+          "peak_gb": 3.835,
+          "acceptance_rate": 0.6446,
+          "mean_accepted_per_round": 2.569,
+          "tokens_per_round": 3.485,
+          "rounds": 262,
+          "accepted_histogram": [
+            47,
+            35,
+            31,
+            20,
+            129
+          ],
+          "draft_ms_per_round": 152.94,
+          "verify_ms_per_round": 47.1,
+          "outputs_identical_to_greedy": "7/8"
+        },
+        {
+          "gamma": 6,
+          "seconds": 62.6971,
+          "seconds_std": 0.3099,
+          "tok_s": 15.01,
+          "speedup": 0.701,
+          "peak_gb": 3.835,
+          "acceptance_rate": 0.5525,
+          "mean_accepted_per_round": 3.293,
+          "tokens_per_round": 4.091,
+          "rounds": 222,
+          "accepted_histogram": [
+            43,
+            33,
+            22,
+            16,
+            16,
+            10,
+            82
+          ],
+          "draft_ms_per_round": 230.28,
+          "verify_ms_per_round": 48.29,
+          "outputs_identical_to_greedy": "7/8"
+        },
+        {
+          "gamma": 8,
+          "seconds": 70.6555,
+          "seconds_std": 0.2173,
+          "tok_s": 13.32,
+          "speedup": 0.622,
+          "peak_gb": 3.835,
+          "acceptance_rate": 0.4822,
+          "mean_accepted_per_round": 3.833,
+          "tokens_per_round": 4.568,
+          "rounds": 198,
+          "accepted_histogram": [
+            38,
+            32,
+            24,
+            9,
+            14,
+            9,
+            8,
+            9,
+            55
+          ],
+          "draft_ms_per_round": 303.04,
+          "verify_ms_per_round": 48.18,
+          "outputs_identical_to_greedy": "8/8"
+        }
+      ]
+    }
+  ]
+}

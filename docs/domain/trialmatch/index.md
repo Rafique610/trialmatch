@@ -98,8 +98,9 @@ tokens, nothing truncated).
 | TRIA-7 Fine-tune sweep | done |
 | TRIA-8 Final test | done |
 | TRIA-9 KV cache | done |
-| TRIA-10 Tiled attention | in review |
-| TRIA-11 to 15 | backlog |
+| TRIA-10 Tiled attention | done |
+| TRIA-11 Speculative decoding | in review |
+| TRIA-12 to 15 | backlog |
 
 ## Baseline
 
@@ -140,6 +141,13 @@ recompute token for token. Benchmark: `results/bench/kvcache.json`. GPU tests ar
 `src/attention/reference.py` (the single reference, also used by the KV runner) and
 `src/attention/tiled.py` (online softmax, causal block skip). Use `attn_fn=tiled` in `Runner.forward`.
 Benchmark: `results/bench/attention.json`. Flash SDPA is not in the Windows PyTorch build. Details in `attention.md`.
+
+## Speculative decoding
+
+`src/speculative/decode.py` (`speculative_greedy(target, draft, ids, n, gamma, eos)`) on two `Runner`s.
+The draft weights live in `models/Qwen2.5-0.5B-Instruct` (git-ignored; the C: drive was full) and are found
+by `settings.model_source`. Qwen's `generation_config` has `repetition_penalty 1.1`: pass
+`repetition_penalty=1.0` to `generate` when pure greedy is meant. Details in `speculative.md`.
 
 ## Evaluation
 

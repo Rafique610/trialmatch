@@ -94,7 +94,7 @@ def hf_generate(model, ids, n) -> dict:
     torch.cuda.synchronize()
     t0 = time.perf_counter()
     model.generate(ids[None], attention_mask=torch.ones_like(ids)[None], max_new_tokens=n, min_new_tokens=n, do_sample=False,
-                   temperature=None, top_p=None, top_k=None)
+                   temperature=None, top_p=None, top_k=None, repetition_penalty=1.0)
     torch.cuda.synchronize()
     return {"prefill_s": 0.0, "decode_s": time.perf_counter() - t0}
 

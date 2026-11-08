@@ -22,6 +22,12 @@ class Settings(BaseSettings):
     data_dir: Path = ROOT / "data"
     results_dir: Path = ROOT / "results"
     checkpoints_dir: Path = ROOT / "checkpoints"
+    models_dir: Path = ROOT / "models"  # optional local copies (git-ignored), used before the HF cache
+
+    def model_source(self, repo_id: str) -> str:
+        """models/<name> if a full local copy exists, else the Hugging Face id."""
+        local = self.models_dir / repo_id.split("/")[-1]
+        return str(local) if (local / "config.json").exists() else repo_id
 
 
 settings = Settings()

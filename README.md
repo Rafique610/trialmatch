@@ -25,8 +25,8 @@ GenAI Assignment 2 · dataset: [TrialGPT Criterion Annotations](https://huggingf
 | QLoRA training sweep (val) | TRIA-7 | done |
 | Final test + error analysis | TRIA-8 | done |
 | KV cache (own decoder, equivalence, benchmark) | TRIA-9 | done |
-| Tiled online-softmax attention | TRIA-10 | in review |
-| Speculative decoding | TRIA-11 | not started |
+| Tiled online-softmax attention | TRIA-10 | done |
+| Speculative decoding | TRIA-11 | in review |
 | App | TRIA-12, 13 | not started |
 | Paper and submission | TRIA-14, 15 | not started |
 
@@ -163,6 +163,15 @@ Swapped into all 28 layers of the model, it gives identical tokens. At 8,192 tok
 26 MB of working memory where the reference needs 9.3 GB. It's slower than PyTorch's fused
 kernels, because a Python loop can't keep tiles in on-chip memory. Details:
 [docs/domain/trialmatch/attention.md](docs/domain/trialmatch/attention.md).
+
+## Speculative decoding (TRIA-11)
+
+Our own greedy draft-and-verify loop: the 0.5B model guesses γ tokens, the 1.5B model checks them
+in one pass, and both caches roll back to what was accepted. Its output is identical to the 1.5B
+model's own greedy output (all task prompts at every γ; the one free-text mismatch is an exact fp16
+tie). On this laptop it is **slower** (0.59–0.97×) even though 74–91% of guesses are accepted. Our
+runner makes a 0.5B token cost 85% of a 1.5B token, and the doc measures why. Details:
+[docs/domain/trialmatch/speculative.md](docs/domain/trialmatch/speculative.md).
 
 ## Models
 

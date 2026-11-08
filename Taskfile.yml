@@ -85,12 +85,13 @@ tasks:
       - uv run python -m src.eval.compare results/baseline_test results/finetuned_test > results/test_comparison.md
 
   bench:
-    desc: "Benchmarks -> results/bench/: KV cache (TRIA-9), attention error grid + timing (TRIA-10); speculative added by TRIA-11"
+    desc: "Benchmarks -> results/bench/: KV cache (TRIA-9), attention error grid + timing (TRIA-10), speculative decoding (TRIA-11)"
     env:
       HF_HUB_OFFLINE: "1"
     cmds:
       - uv run python -m src.kvcache.bench
       - uv run python -m src.attention.bench
+      - uv run python -m src.speculative.bench
 
   app:
     desc: Start backend and browser app (TRIA-12/13)

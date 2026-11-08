@@ -34,3 +34,6 @@ report/*.synctex.gz
 Thumbs.db
 .vscode/
 .idea/
+
+# local model copies (C: drive is full)
+models/
