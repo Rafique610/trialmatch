@@ -22,8 +22,8 @@ GenAI Assignment 2 · dataset: [TrialGPT Criterion Annotations](https://huggingf
 | Prompt format and token lengths | TRIA-4 | done |
 | Evaluation metrics | TRIA-5 | done |
 | Untrained baseline (val) | TRIA-6 | done |
-| QLoRA training sweep (val) | TRIA-7 | in review |
-| Final test | TRIA-8 | not started |
+| QLoRA training sweep (val) | TRIA-7 | done |
+| Final test + error analysis | TRIA-8 | in review |
 | KV cache, tiled attention, speculative decoding | TRIA-9 to 11 | not started |
 | App | TRIA-12, 13 | not started |
 | Paper and submission | TRIA-14, 15 | not started |
@@ -122,6 +122,23 @@ task baseline   # re-runs the untrained model on val (~1 min on an RTX 3050)
 The untrained model answers in valid JSON, but collapses to one label per
 criterion type and reads exclusion backwards. See
 [docs/domain/trialmatch/baseline.md](docs/domain/trialmatch/baseline.md).
+
+## Final test (206 criteria, run once)
+
+Settings were frozen in [results/test_protocol.md](results/test_protocol.md) before the run.
+
+| Model | Accuracy | Macro-F1 | Incl macro-F1 | Excl macro-F1 | Evidence micro-F1 |
+| --- | --- | --- | --- | --- | --- |
+| Untrained | 0.039 | 0.077 | 0.099 | 0.000 | 0.157 |
+| Fine-tuned | **0.709** | **0.566** | 0.541 | 0.487 | **0.579** |
+
+The test split has no gold `excluded` rows, so that class drops out of macro-F1.
+Full table: [results/test_comparison.md](results/test_comparison.md). Ten errors
+traced to sentence ids: [results/error_analysis.md](results/error_analysis.md).
+
+```bash
+task final-test
+```
 
 ## Models
 

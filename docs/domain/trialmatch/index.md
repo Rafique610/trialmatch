@@ -95,8 +95,9 @@ tokens, nothing truncated).
 | TRIA-4 Prompt + lengths | done |
 | TRIA-5 Evaluation metrics | done |
 | TRIA-6 Baseline on val | done |
-| TRIA-7 Fine-tune sweep | in review |
-| TRIA-8 to 15 | backlog |
+| TRIA-7 Fine-tune sweep | done |
+| TRIA-8 Final test | in review |
+| TRIA-9 to 15 | backlog |
 
 ## Baseline
 
@@ -115,6 +116,15 @@ With fp16 + the adapter it scores val acc 0.738, macro-F1 0.527, evidence
 micro-F1 0.508 (`results/finetuned_val/`). Published as
 `Aduhere/trialmatch-qwen2.5-1.5b-qlora` (`task adapter-download` → `checkpoints/final/`).
 Details in `finetune.md`.
+
+## Final test
+
+Run once (`task final-test`) under the frozen protocol `results/test_protocol.md`.
+Test: base acc 0.039 / macro-F1 0.077 → fine-tuned acc 0.709 / macro-F1 0.566,
+evidence micro-F1 0.157 → 0.579, 0 parse errors. Table: `results/test_comparison.md`
+(built by `src/eval/compare.py`). Error analysis: `results/error_analysis.md` (10 cases).
+The largest error source is the "not mentioned" convention, which the gold labels apply
+inconsistently.
 
 ## Evaluation
 

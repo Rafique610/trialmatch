@@ -68,6 +68,15 @@ tasks:
     cmds:
       - uv run python -m src.eval.run {{.CLI_ARGS}}
 
+  final-test:
+    desc: One-time sealed test run, base vs fine-tuned, + comparison table (TRIA-8; protocol in results/test_protocol.md)
+    env:
+      HF_HUB_OFFLINE: "1"
+    cmds:
+      - uv run python -m src.finetune.predict --split test --run baseline_test
+      - uv run python -m src.finetune.predict --split test --run finetuned_test --adapter checkpoints/final
+      - uv run python -m src.eval.compare results/baseline_test results/finetuned_test > results/test_comparison.md
+
   bench:
     desc: KV cache, attention and speculative benchmarks (TRIA-9/10/11)
     cmds:
