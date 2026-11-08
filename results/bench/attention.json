@@ -1,0 +1,252 @@
+{
+  "gpu": "NVIDIA GeForce RTX 3050 6GB Laptop GPU",
+  "torch": "2.11.0+cu128",
+  "repeats": 5,
+  "warmup": 1,
+  "shape": {
+    "batch": 1,
+    "heads": 12,
+    "head_dim": 128,
+    "dtype": "float16",
+    "causal": true
+  },
+  "timing": [
+    {
+      "seq": 256,
+      "inputs_mb": 2.2,
+      "reference": {
+        "ms": 4.582,
+        "ms_std": 0.049,
+        "extra_mb": 9.1
+      },
+      "tiled_64": {
+        "ms": 14.574,
+        "ms_std": 2.463,
+        "extra_mb": 3.0
+      },
+      "tiled_128": {
+        "ms": 5.441,
+        "ms_std": 0.072,
+        "extra_mb": 6.0
+      },
+      "sdpa_math": {
+        "ms": 5.853,
+        "ms_std": 0.188,
+        "extra_mb": 13.0
+      },
+      "sdpa_mem_efficient": {
+        "ms": 0.377,
+        "ms_std": 0.035,
+        "extra_mb": 0.8
+      },
+      "sdpa_flash": {
+        "error": "No available kernel. Aborting execution."
+      }
+    },
+    {
+      "seq": 512,
+      "inputs_mb": 4.5,
+      "reference": {
+        "ms": 18.479,
+        "ms_std": 0.206,
+        "extra_mb": 36.3
+      },
+      "tiled_64": {
+        "ms": 47.452,
+        "ms_std": 4.318,
+        "extra_mb": 3.8
+      },
+      "tiled_128": {
+        "ms": 18.36,
+        "ms_std": 2.331,
+        "extra_mb": 6.8
+      },
+      "sdpa_math": {
+        "ms": 4.904,
+        "ms_std": 0.531,
+        "extra_mb": 40.0
+      },
+      "sdpa_mem_efficient": {
+        "ms": 0.363,
+        "ms_std": 0.046,
+        "extra_mb": 1.5
+      },
+      "sdpa_flash": {
+        "error": "No available kernel. Aborting execution."
+      }
+    },
+    {
+      "seq": 1024,
+      "inputs_mb": 9.0,
+      "reference": {
+        "ms": 12.774,
+        "ms_std": 0.046,
+        "extra_mb": 145.0
+      },
+      "tiled_64": {
+        "ms": 178.041,
+        "ms_std": 7.9,
+        "extra_mb": 5.3
+      },
+      "tiled_128": {
+        "ms": 49.56,
+        "ms_std": 5.87,
+        "extra_mb": 8.3
+      },
+      "sdpa_math": {
+        "ms": 11.933,
+        "ms_std": 0.577,
+        "extra_mb": 136.0
+      },
+      "sdpa_mem_efficient": {
+        "ms": 2.419,
+        "ms_std": 0.058,
+        "extra_mb": 3.0
+      },
+      "sdpa_flash": {
+        "error": "No available kernel. Aborting execution."
+      }
+    },
+    {
+      "seq": 2048,
+      "inputs_mb": 18.0,
+      "reference": {
+        "ms": 40.563,
+        "ms_std": 0.906,
+        "extra_mb": 580.1
+      },
+      "tiled_64": {
+        "ms": 606.092,
+        "ms_std": 27.08,
+        "extra_mb": 8.3
+      },
+      "tiled_128": {
+        "ms": 157.043,
+        "ms_std": 11.708,
+        "extra_mb": 11.3
+      },
+      "sdpa_math": {
+        "ms": 42.731,
+        "ms_std": 3.685,
+        "extra_mb": 496.0
+      },
+      "sdpa_mem_efficient": {
+        "ms": 1.766,
+        "ms_std": 0.123,
+        "extra_mb": 6.0
+      },
+      "sdpa_flash": {
+        "error": "No available kernel. Aborting execution."
+      }
+    },
+    {
+      "seq": 4096,
+      "inputs_mb": 36.0,
+      "reference": {
+        "ms": 153.001,
+        "ms_std": 6.092,
+        "extra_mb": 2320.2
+      },
+      "tiled_64": {
+        "ms": 2277.115,
+        "ms_std": 53.216,
+        "extra_mb": 14.3
+      },
+      "tiled_128": {
+        "ms": 645.463,
+        "ms_std": 28.102,
+        "extra_mb": 17.3
+      },
+      "sdpa_math": {
+        "ms": 135.994,
+        "ms_std": 5.672,
+        "extra_mb": 1888.0
+      },
+      "sdpa_mem_efficient": {
+        "ms": 7.338,
+        "ms_std": 0.583,
+        "extra_mb": 12.0
+      },
+      "sdpa_flash": {
+        "error": "No available kernel. Aborting execution."
+      }
+    },
+    {
+      "seq": 8192,
+      "inputs_mb": 72.0,
+      "reference": {
+        "ms": 5086.893,
+        "ms_std": 147.872,
+        "extra_mb": 9280.4
+      },
+      "tiled_64": {
+        "ms": 9931.918,
+        "ms_std": 200.558,
+        "extra_mb": 26.3
+      },
+      "tiled_128": {
+        "ms": 2651.591,
+        "ms_std": 133.519,
+        "extra_mb": 29.3
+      },
+      "sdpa_math": {
+        "ms": 1464.051,
+        "ms_std": 47.004,
+        "extra_mb": 7360.1
+      },
+      "sdpa_mem_efficient": {
+        "ms": 26.869,
+        "ms_std": 3.483,
+        "extra_mb": 24.0
+      },
+      "sdpa_flash": {
+        "error": "No available kernel. Aborting execution."
+      }
+    }
+  ],
+  "block_sweep_seq2048": [
+    {
+      "block": 16,
+      "ms": 9528.863,
+      "ms_std": 627.139,
+      "extra_mb": 6.5
+    },
+    {
+      "block": 32,
+      "ms": 2267.862,
+      "ms_std": 50.289,
+      "extra_mb": 7.0
+    },
+    {
+      "block": 64,
+      "ms": 603.237,
+      "ms_std": 14.532,
+      "extra_mb": 8.3
+    },
+    {
+      "block": 128,
+      "ms": 188.018,
+      "ms_std": 41.33,
+      "extra_mb": 11.3
+    },
+    {
+      "block": 256,
+      "ms": 57.147,
+      "ms_std": 5.61,
+      "extra_mb": 21.1
+    },
+    {
+      "block": 512,
+      "ms": 30.076,
+      "ms_std": 4.303,
+      "extra_mb": 60.4
+    }
+  ],
+  "in_model": {
+    "prompt_tokens": 512,
+    "new_tokens": 64,
+    "prefill_logits_max_abs_diff": 0.1299,
+    "prefill_argmax_agreement": 1.0,
+    "greedy_tokens_equal": true
+  }
+}

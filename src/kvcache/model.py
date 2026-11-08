@@ -6,9 +6,10 @@ RoPE positions, the causal mask with a cache offset, grouped-query attention and
 Batch size 1, no padding.
 """
 
-import math
-
 import torch
+
+from src.attention import reference
+from src.attention.tiled import tiled_attention
 
 
 class KVCache:
@@ -36,13 +37,13 @@ class KVCache:
 
 
 def attention(q: torch.Tensor, k: torch.Tensor, v: torch.Tensor, q_offset: int) -> torch.Tensor:
-    """Reference causal attention. q [H, Tq, d], k/v [H, Tk, d] with Tk = q_offset + Tq.
-    Query i sits at absolute position q_offset + i and may see keys 0..q_offset + i."""
-    scores = (q.float() @ k.float().transpose(-1, -2)) / math.sqrt(q.shape[-1])
-    tq, tk = q.shape[1], k.shape[1]
-    future = torch.arange(tk, device=q.device)[None, :] > (q_offset + torch.arange(tq, device=q.device))[:, None]
-    scores.masked_fill_(future, float("-inf"))
-    return (scores.softmax(-1) @ v.float()).to(q.dtype)
+    """Causal reference attention (src.attention.reference). q [H, Tq, d], k/v [H, Tk, d], Tk = q_offset + Tq."""
+    return reference.attention(q, k, v, causal=True, q_offset=q_offset)
+
+
+def tiled(q: torch.Tensor, k: torch.Tensor, v: torch.Tensor, q_offset: int) -> torch.Tensor:
+    """Causal tiled online-softmax attention (TRIA-10), same interface, for `attn_fn=tiled`."""
+    return tiled_attention(q, k, v, causal=True, q_offset=q_offset)
 
 
 def rotate_half(x: torch.Tensor) -> torch.Tensor:

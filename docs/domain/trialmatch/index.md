@@ -97,8 +97,9 @@ tokens, nothing truncated).
 | TRIA-6 Baseline on val | done |
 | TRIA-7 Fine-tune sweep | done |
 | TRIA-8 Final test | done |
-| TRIA-9 KV cache | in review |
-| TRIA-10 to 15 | backlog |
+| TRIA-9 KV cache | done |
+| TRIA-10 Tiled attention | in review |
+| TRIA-11 to 15 | backlog |
 
 ## Baseline
 
@@ -133,6 +134,12 @@ inconsistently.
 rollback) and a pluggable `attn_fn` (TRIA-10 plugs in here). `greedy_cached` equals full
 recompute token for token. Benchmark: `results/bench/kvcache.json`. GPU tests are marked `gpu`
 (`task test-gpu`), and `task test` skips them. Details in `kvcache.md`.
+
+## Attention
+
+`src/attention/reference.py` (the single reference, also used by the KV runner) and
+`src/attention/tiled.py` (online softmax, causal block skip). Use `attn_fn=tiled` in `Runner.forward`.
+Benchmark: `results/bench/attention.json`. Flash SDPA is not in the Windows PyTorch build. Details in `attention.md`.
 
 ## Evaluation
 

@@ -24,8 +24,9 @@ GenAI Assignment 2 · dataset: [TrialGPT Criterion Annotations](https://huggingf
 | Untrained baseline (val) | TRIA-6 | done |
 | QLoRA training sweep (val) | TRIA-7 | done |
 | Final test + error analysis | TRIA-8 | done |
-| KV cache (own decoder, equivalence, benchmark) | TRIA-9 | in review |
-| Tiled attention, speculative decoding | TRIA-10, 11 | not started |
+| KV cache (own decoder, equivalence, benchmark) | TRIA-9 | done |
+| Tiled online-softmax attention | TRIA-10 | in review |
+| Speculative decoding | TRIA-11 | not started |
 | App | TRIA-12, 13 | not started |
 | Paper and submission | TRIA-14, 15 | not started |
 
@@ -153,6 +154,15 @@ cache offset, grouped-query attention. It matches full recomputation token for t
 task bench       # equivalence + benchmark -> results/bench/kvcache.json, kvcache.png
 task test-gpu    # token-equality tests on the real model (~2.5 min)
 ```
+
+## Tiled attention (TRIA-10)
+
+Attention in key/value blocks with a running max, sum and output (online softmax), in pure
+PyTorch. It matches the full reference to 1.8e-6 (fp32) / 4.9e-4 (fp16) over a 144-config grid.
+Swapped into all 28 layers of the model, it gives identical tokens. At 8,192 tokens it needs
+26 MB of working memory where the reference needs 9.3 GB. It's slower than PyTorch's fused
+kernels, because a Python loop can't keep tiles in on-chip memory. Details:
+[docs/domain/trialmatch/attention.md](docs/domain/trialmatch/attention.md).
 
 ## Models
 
