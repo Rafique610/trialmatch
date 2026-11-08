@@ -1,0 +1,21 @@
+\begin{table}[t]
+\centering
+\caption{Speculative decoding, fine-tuned target, 20 screening prompts (plain greedy: 19.8 tok/s).}
+\label{tab:spec}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%
+\begin{tabular}{rrrrrrrr}
+\toprule
+$\gamma$ & Accept & Tok/pass & Draft ms & Verify ms & tok/s & Speed-up & Identical \\
+\midrule
+1 & 0.869 & 1.74 & 40 & 47 & 18.4 & 0.93$\times$ & 20/20 \\
+2 & 0.772 & 2.15 & 78 & 47 & 16.4 & 0.83$\times$ & 20/20 \\
+3 & 0.810 & 2.67 & 117 & 47 & 16.2 & 0.82$\times$ & 20/20 \\
+4 & 0.744 & 3.11 & 159 & 47 & 15.8 & 0.80$\times$ & 20/20 \\
+6 & 0.650 & 3.46 & 229 & 50 & 13.6 & 0.69$\times$ & 20/20 \\
+8 & 0.593 & 3.73 & 309 & 49 & 11.7 & 0.59$\times$ & 20/20 \\
+\bottomrule
+\end{tabular}}
+\\[2pt]\parbox{0.98\linewidth}{\scriptsize Source: results/bench/speculative.json (1 warm-up, 3 repeats). Speed-up = plain cached greedy time / speculative time.}
+\end{table}

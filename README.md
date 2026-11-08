@@ -28,8 +28,9 @@ GenAI Assignment 2 · dataset: [TrialGPT Criterion Annotations](https://huggingf
 | Tiled online-softmax attention | TRIA-10 | done |
 | Speculative decoding | TRIA-11 | done |
 | App backend (FastAPI) | TRIA-12 | done |
-| App frontend (Next.js) | TRIA-13 | in review |
-| Paper and submission | TRIA-14, 15 | not started |
+| App frontend (Next.js) | TRIA-13 | done |
+| IEEE paper | TRIA-14 | in review |
+| Submission | TRIA-15 | not started |
 
 ## Requirements
 
@@ -202,6 +203,16 @@ The API on its own (`task api`, then http://localhost:8000/docs):
 - **`POST /report`:** downloads an HTML/Markdown report with provenance.
 
 Details: [docs/domain/trialmatch/app.md](docs/domain/trialmatch/app.md).
+
+## Paper (TRIA-14)
+
+[report/main.pdf](report/main.pdf) is the IEEE-format paper. Rebuild it with:
+
+```bash
+task paper   # tables + figures from results/, then LaTeX via Tectonic
+```
+
+Every number in it is generated from `results/` by `report/make_tables.py`. Section checklist: [docs/domain/trialmatch/paper.md](docs/domain/trialmatch/paper.md).
 
 ## Models
 

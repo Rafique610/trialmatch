@@ -1,0 +1,19 @@
+\begin{table}[t]
+\centering
+\caption{Validation: generate's default repetition penalty (1.1) vs pure greedy (1.0).}
+\label{tab:penalty}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%
+\begin{tabular}{llrrr}
+\toprule
+Model & Rep.\ pen. & Acc & Macro-F1 & Evid.\ F1 \\
+\midrule
+untrained & 1.1 & 0.068 & 0.081 & 0.134 \\
+untrained & 1.0 & 0.068 & 0.081 & 0.091 \\
+fine-tuned & 1.1 & 0.738 & 0.527 & 0.507 \\
+fine-tuned & 1.0 & 0.738 & 0.527 & 0.547 \\
+\bottomrule
+\end{tabular}}
+\\[2pt]\parbox{0.98\linewidth}{\scriptsize Source: results/\{baseline,finetuned\}\_val\{,\_greedy\}/metrics.json. No label changed in any of the 206 rows.}
+\end{table}

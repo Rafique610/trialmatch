@@ -1,0 +1,18 @@
+\begin{table*}[t]
+\centering
+\caption{QLoRA sweep, best epoch of each run by validation macro-F1 (4-bit, in-training scoring).}
+\label{tab:sweep}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrcr|rrrrr}
+\toprule
+Run & $r$ & LR & Wts & Ep. & Val loss & Acc & Macro-F1 & Excl F1 & Evid.\ F1 \\
+\midrule
+A: r16 & 16 & 0.0002 & no & 5 & 0.157 & 0.738 & 0.442 & 0.445 & 0.548 \\
+B: r8 & 8 & 0.0002 & no & 5 & 0.157 & 0.743 & 0.443 & 0.427 & 0.555 \\
+C: r16 + weights & 16 & 0.0002 & yes & 4 & 0.159 & 0.757 & 0.572 & 0.622 & 0.517 \\
+D: r16, lr 5e-5 & 16 & 5e-05 & no & 5 & 0.138 & 0.757 & 0.528 & 0.560 & 0.575 \\
+\bottomrule
+\end{tabular}
+\\[2pt]\parbox{0.95\linewidth}{\scriptsize Source: results/train\_*/summary.json. Wts = inverse-square-root label weighting.}
+\end{table*}

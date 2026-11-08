@@ -1,0 +1,17 @@
+\begin{table*}[t]
+\centering
+\caption{Patient-grouped split (seed 42) and label counts per split.}
+\label{tab:split}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrr|rrrr|rrrr}
+\toprule
+ & & & \multicolumn{4}{c|}{Inclusion} & \multicolumn{4}{c}{Exclusion} \\ Split & Pat. & Rows & inc & not inc & NEI & NA & exc & not exc & NEI & NA \\
+\midrule
+train & 37 & 603 & 88 & 13 & 109 & 5 & 8 & 292 & 65 & 23 \\
+val & 8 & 206 & 35 & 3 & 27 & 1 & 2 & 101 & 26 & 11 \\
+test & 8 & 206 & 27 & 7 & 38 & 3 & 0 & 91 & 28 & 12 \\
+\bottomrule
+\end{tabular}
+\\[2pt]\parbox{0.95\linewidth}{\scriptsize Source: results/split\_manifest.json (dataset revision 1cfcafde94a1). NEI = not enough information, NA = not applicable.}
+\end{table*}

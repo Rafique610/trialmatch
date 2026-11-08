@@ -1,0 +1,21 @@
+\begin{table}[t]
+\centering
+\caption{Attention time (ms) / extra memory (MB), causal, 12 heads, $d{=}128$, fp16.}
+\label{tab:attn}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%
+\begin{tabular}{rrrrr}
+\toprule
+Seq & Reference & Tiled ($B{=}128$) & SDPA math & SDPA mem-eff. \\
+\midrule
+256 & 4.6 / 9 & 5.4 / 6 & 5.9 / 13 & 0.4 / 1 \\
+512 & 18.5 / 36 & 18.4 / 7 & 4.9 / 40 & 0.4 / 2 \\
+1024 & 12.8 / 145 & 49.6 / 8 & 11.9 / 136 & 2.4 / 3 \\
+2048 & 40.6 / 580 & 157.0 / 11 & 42.7 / 496 & 1.8 / 6 \\
+4096 & 153.0 / 2320 & 645.5 / 17 & 136.0 / 1888 & 7.3 / 12 \\
+8192 & 5086.9 / 9280 & 2651.6 / 29 & 1464.1 / 7360 & 26.9 / 24 \\
+\bottomrule
+\end{tabular}}
+\\[2pt]\parbox{0.98\linewidth}{\scriptsize Source: results/bench/attention.json (1 warm-up, 5 repeats). The flash SDPA backend is absent from the Windows PyTorch build.}
+\end{table}

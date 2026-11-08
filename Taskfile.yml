@@ -84,6 +84,14 @@ tasks:
       - uv run python -m src.finetune.predict --split test --run finetuned_test --adapter checkpoints/final
       - uv run python -m src.eval.compare results/baseline_test results/finetuned_test > results/test_comparison.md
 
+  paper:
+    desc: "Build the IEEE paper: tables/figures from results/, then report/main.pdf with Tectonic (TRIA-14)"
+    env:
+      TECTONIC_CACHE_DIR: "{{.ROOT_DIR}}/.tools/tectonic-cache"
+    cmds:
+      - uv run python -m report.make_tables
+      - cd report && ../.tools/tectonic/tectonic.exe -X compile main.tex
+
   bench:
     desc: "Benchmarks -> results/bench/: KV cache (TRIA-9), attention error grid + timing (TRIA-10), speculative decoding (TRIA-11)"
     env:

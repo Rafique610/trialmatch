@@ -1,0 +1,19 @@
+\begin{table}[t]
+\centering
+\caption{KV-cache benchmark, 64 new tokens, mean of 5 runs after warm-up.}
+\label{tab:kv}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%
+\begin{tabular}{rrrrrrr}
+\toprule
+Input & Prefill ms & ms/tok no cache & ms/tok cache & Speed-up & Peak GB & Cache MB \\
+\midrule
+128 & 50 & 58.5 & 50.6 & 1.2$\times$ & 2.90 / 2.90 & 5.2 \\
+512 & 150 & 163.6 & 40.6 & 4.0$\times$ & 2.95 / 2.94 & 15.7 \\
+1024 & 327 & 346.4 & 38.7 & 9.0$\times$ & 3.05 / 3.04 & 29.7 \\
+2048 & 808 & 874.7 & 43.1 & 20.3$\times$ & 3.41 / 3.38 & 57.7 \\
+\bottomrule
+\end{tabular}}
+\\[2pt]\parbox{0.98\linewidth}{\scriptsize Source: results/bench/kvcache.json. Token equality with full recomputation at 64/32, 256/64, 1024/128 (input/output): all identical.}
+\end{table}

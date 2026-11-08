@@ -1,0 +1,17 @@
+\begin{table*}[t]
+\centering
+\caption{Sealed test split, untrained (left of each pair) vs fine-tuned (right). Same 206 criteria, same prompt and decoding.}
+\label{tab:test}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lr|rr|rr|rr|rr|r}
+\toprule
+Subset & $n$ & \multicolumn{2}{c|}{Accuracy} & \multicolumn{2}{c|}{Macro-F1} & \multicolumn{2}{c|}{Evid.\ micro-F1} & \multicolumn{2}{c|}{Evid.\ macro-F1} & Parse err. \\
+\midrule
+overall & 206 & 0.039 & 0.709 & 0.077 & 0.566 & 0.157 & 0.579 & 0.061 & 0.460 & 0 / 0 \\
+inclusion & 75 & 0.107 & 0.733 & 0.099 & 0.541 & 0.217 & 0.626 & 0.065 & 0.559 & 0 / 0 \\
+exclusion & 131 & 0.000 & 0.695 & 0.000 & 0.487 & 0.137 & 0.478 & 0.059 & 0.264 & 0 / 0 \\
+\bottomrule
+\end{tabular}
+\\[2pt]\parbox{0.95\linewidth}{\scriptsize Source: results/baseline\_test/metrics.json, results/finetuned\_test/metrics.json. Macro-F1 averages labels present in the gold set; evidence F1 compares cited sentence ids.}
+\end{table*}

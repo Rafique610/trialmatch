@@ -1,0 +1,20 @@
+\begin{table}[t]
+\centering
+\caption{Largest error cells of the fine-tuned model on test.}
+\label{tab:conf}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%
+\begin{tabular}{lll}
+\toprule
+Count & Gold & Predicted \\
+\midrule
+23 & not enough information & not excluded \\
+7 & not excluded & not enough information \\
+6 & not included & not enough information \\
+6 & not applicable & not excluded \\
+6 & included & not enough information \\
+\bottomrule
+\end{tabular}}
+\\[2pt]\parbox{0.98\linewidth}{\scriptsize Source: confusion matrix in results/finetuned\_test/metrics.json.}
+\end{table}

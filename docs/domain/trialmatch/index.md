@@ -101,8 +101,9 @@ tokens, nothing truncated).
 | TRIA-10 Tiled attention | done |
 | TRIA-11 Speculative decoding | done |
 | TRIA-12 App backend | done |
-| TRIA-13 App frontend | in review |
-| TRIA-14 to 15 | backlog |
+| TRIA-13 App frontend | done |
+| TRIA-14 Paper | in review |
+| TRIA-15 | backlog |
 
 ## Baseline
 
@@ -164,6 +165,10 @@ server on :5173 (TRIA-13). Details in `app.md`.
 `lib/workbench.tsx` (one request per criterion, then `/aggregate`); the typed client is `lib/api.ts`.
 Components are in `components/workbench/*` and `components/bench/*`. Styles: `app/globals.css` (tokens) and
 `app/form.css`. The design system is in root `DESIGN.md`. Capture states with `scripts/ui_screens.py`.
+
+## Paper
+
+`report/` (IEEEtran) is built by `task paper`. `report/make_tables.py` turns `results/` into `report/tables/*.tex`, `numbers.tex` (the numbers used in the prose) and the figures. Tectonic lives in `.tools/` (git-ignored). Checklist and owner checks: `paper.md`.
 
 ## Evaluation
 
