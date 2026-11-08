@@ -100,8 +100,9 @@ tokens, nothing truncated).
 | TRIA-9 KV cache | done |
 | TRIA-10 Tiled attention | done |
 | TRIA-11 Speculative decoding | done |
-| TRIA-12 App backend | in review |
-| TRIA-13 to 15 | backlog |
+| TRIA-12 App backend | done |
+| TRIA-13 App frontend | in review |
+| TRIA-14 to 15 | backlog |
 
 ## Baseline
 
@@ -156,6 +157,13 @@ by `settings.model_source`. Qwen's `generation_config` has `repetition_penalty 1
 `engine.Engine` (merged adapter, lazy draft, GPU lock), `screening` (split / prompt / parse /
 explain / ADR 0002 rule), `bench`, `report`. `task app` → :8000/docs. CORS allows the Vite dev
 server on :5173 (TRIA-13). Details in `app.md`.
+
+## App frontend
+
+`web/` (Next.js 16, pnpm): `app/page.tsx` (Screen) and `app/benchmarks/page.tsx`. Shared state lives in
+`lib/workbench.tsx` (one request per criterion, then `/aggregate`); the typed client is `lib/api.ts`.
+Components are in `components/workbench/*` and `components/bench/*`. Styles: `app/globals.css` (tokens) and
+`app/form.css`. The design system is in root `DESIGN.md`. Capture states with `scripts/ui_screens.py`.
 
 ## Evaluation
 

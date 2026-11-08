@@ -27,8 +27,8 @@ GenAI Assignment 2 · dataset: [TrialGPT Criterion Annotations](https://huggingf
 | KV cache (own decoder, equivalence, benchmark) | TRIA-9 | done |
 | Tiled online-softmax attention | TRIA-10 | done |
 | Speculative decoding | TRIA-11 | done |
-| App backend (FastAPI) | TRIA-12 | in review |
-| App frontend | TRIA-13 | not started |
+| App backend (FastAPI) | TRIA-12 | done |
+| App frontend (Next.js) | TRIA-13 | in review |
 | Paper and submission | TRIA-14, 15 | not started |
 
 ## Requirements
@@ -179,11 +179,19 @@ tie). On this laptop it is **slower** (0.59–0.97×) even though 74–91% of gu
 runner makes a 0.5B token cost 85% of a 1.5B token, and the doc measures why. Details:
 [docs/domain/trialmatch/speculative.md](docs/domain/trialmatch/speculative.md).
 
-## App backend (TRIA-12)
+## The app (TRIA-12, 13)
 
 ```bash
-task app        # API on http://localhost:8000 — open /docs to try every endpoint
+task app        # API on :8000 and the browser app on http://localhost:3000 (first run installs web packages)
 ```
+
+The browser app is a screening workbench styled as a clinical-trial case report form: the note on
+the left, the eligibility form on the right. Every criterion shows all four possible answers with
+the model's ticked, and selecting a row highlights the sentences it cites. A Benchmarks tab runs
+the three decoders and the attention kernels live on your input. Screenshots: `results/ui/`.
+Design records: `PRODUCT.md`, `DESIGN.md`. Details: [docs/domain/trialmatch/app.md](docs/domain/trialmatch/app.md).
+
+The API on its own (`task api`, then http://localhost:8000/docs):
 
 - **`POST /screen`:** takes any patient note plus inclusion/exclusion criteria, with a choice of
   decoder (no cache, KV cache, speculative). It returns, per criterion, the label, the cited

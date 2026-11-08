@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-08T15:30:00Z",
+  "title": "Design System: TrialMatch",
+  "extensions": {
+    "colorMeta": {
+      "form-blue": { "role": "primary", "displayName": "Form Blue", "canonical": "#1d4fa0", "tonalRamp": ["#e7eef9", "#1d4fa0", "#173f80"] },
+      "ink": { "role": "neutral", "displayName": "Navy Ink", "canonical": "#14233f", "tonalRamp": ["#5f6b82", "#3f4d66", "#14233f"] },
+      "paper": { "role": "neutral", "displayName": "Form White", "canonical": "#ffffff", "tonalRamp": ["#ffffff", "#f7f9fc", "#eef2f7"] },
+      "highlighter": { "role": "accent", "displayName": "Highlighter", "canonical": "#ffe46b", "tonalRamp": ["#fff4bd", "#ffe46b", "#ecd36a"] },
+      "banner": { "role": "warning", "displayName": "Prototype Banner", "canonical": "#a9381a" }
+    },
+    "typographyMeta": {
+      "verdict": { "displayName": "Verdict", "purpose": "The outcome heading only." },
+      "data": { "displayName": "Data mono", "purpose": "Row codes, sentence ids, raw model output, measurements." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "ease-out-expo", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "All state transitions." },
+      { "name": "highlighter-sweep", "value": "background-size 380ms ease-out-expo", "purpose": "Cited sentence mark, the one authored motion." },
+      { "name": "tick-in", "value": "scale 0.55 to 1, 160ms", "purpose": "An answer box being ticked as its row resolves." }
+    ],
+    "breakpoints": [
+      { "name": "stacked", "value": "1080px" },
+      { "name": "phone", "value": "720px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "CRF answer row",
+      "kind": "custom",
+      "refersTo": "answer-box",
+      "description": "A criterion with its four answer boxes; the model's answer ticked, the expert's circled.",
+      "html": "<div class=\"ds-row\"><span class=\"ds-code\">IN-2</span><span class=\"ds-text\">Temperature above 38 °C</span><span class=\"ds-box on\">✓</span><span class=\"ds-box\"></span><span class=\"ds-box\"></span><span class=\"ds-box\"></span></div>",
+      "css": ".ds-row{display:grid;grid-template-columns:52px 1fr repeat(4,40px);align-items:center;gap:8px;padding:10px 16px;border-bottom:1px solid #edf1f6;font:14px 'Public Sans',sans-serif;color:#14233f}.ds-code{font:700 12px ui-monospace,monospace;color:#1d4fa0}.ds-box{width:18px;height:18px;border:1.5px solid #a7b6cc;border-radius:2px;justify-self:center;display:grid;place-items:center;color:#fff;font-size:12px}.ds-box.on{background:#17663f;border-color:transparent}"
+    },
+    {
+      "name": "Cited sentence",
+      "kind": "custom",
+      "refersTo": "evidence-chip",
+      "description": "A numbered note sentence; a highlighter mark sweeps across it when the selected row cites it.",
+      "html": "<p class=\"ds-s\"><span>0</span><mark>An 8-year-old male presents with fever up to 39 C.</mark></p>",
+      "css": ".ds-s{display:grid;grid-template-columns:30px 1fr;gap:10px;font:14px/1.6 'Public Sans',sans-serif;color:#14233f}.ds-s span{font:700 12.5px ui-monospace,monospace;text-align:right}.ds-s mark{background:linear-gradient(#ffe46b,#ffe46b) no-repeat 0 60%/100% 82%;color:inherit}"
+    },
+    {
+      "name": "Primary button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one primary action per view (Screen patient, Run benchmark, Download report).",
+      "html": "<button class=\"ds-btn\">Screen patient</button>",
+      "css": ".ds-btn{height:34px;padding:0 14px;border-radius:3px;border:1px solid #1d4fa0;background:#1d4fa0;color:#fff;font:600 13px 'Public Sans',sans-serif}.ds-btn:hover{background:#173f80}"
+    }
+  ]
+}

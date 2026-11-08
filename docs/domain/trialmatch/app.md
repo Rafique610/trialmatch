@@ -109,3 +109,98 @@ reference 580 MB, error 4.9e-4.
 - the splitter.
 
 Plus 1 GPU test: the real model in all three modes gives the same labels, and `/benchmark` tokens match.
+
+# App frontend (TRIA-13)
+
+Next.js 16 + React 19 + TypeScript in `web/` (pnpm, package store in `.pnpm-store/` on D:).
+- **Start:** `task app` starts the API (:8000) and the browser app (:3000) together. `task api` / `task web` start one each.
+- **Backend calls:** the browser calls `/api/*`, which Next proxies to FastAPI, so there is one origin and no CORS.
+- **Design process:**
+  - ui-ux-pro-max produced the design system;
+  - the owner chose the **case report form** direction over Drug Facts / lab report / SaaS;
+  - impeccable gave the craft floor, the finish review and the fix pass.
+  - Records: `PRODUCT.md`, `DESIGN.md` (Stitch-compatible format), the direction contract in `.impeccable/surfaces/screening-workbench.md`, and the sidecar `.impeccable/design.json`.
+  - Google Stitch is wired in `.mcp.json` (key from the `STITCH_API_KEY` environment variable) for a later refinement pass.
+
+## Screens
+
+- **Screen** (`/`):
+  - **Left:** the patient note (paste, or load one of 6 real validation examples via the backend's `GET /examples`). After screening it becomes the numbered sentences the model saw.
+  - **Right:** the **eligibility form**: criteria rows (add, remove, type toggle, or paste a protocol block under Inclusion/Exclusion headings), the decoder (no cache / KV cache / speculative + γ), and **Screen patient**.
+  - **Running:** criteria are screened **one request per criterion**, so rows tick in as they finish and the run can be stopped. The outcome then comes from `POST /aggregate`, so the ADR 0002 rule lives only in the backend.
+  - **Each row:** the code (IN-n / EX-n), the criterion, evidence chips, and **all four answer boxes** with the model's ticked. On validation examples the expert's answer is circled.
+  - **Selecting a row** sweeps a highlighter over its cited sentences and opens the explanation, missing-info flag, expert comparison, raw output and measured timing. **Hovering a sentence** lights the rows that cite it (mouse only).
+  - **The outcome** closes the form: "Outcome: (verdict)", the reason, the drivers (links to rows), the three-step rule with the fired step bold, the disclaimer, and **Download report** (HTML / Markdown via `/report`).
+- **Benchmarks** (`/benchmarks`):
+  - **Decoders:** the current note plus a chosen criterion run live through all three decoders (`/benchmark`): a table of prefill / decode / total ms, tokens, tok/s, peak GPU, acceptance and speed vs no-cache, a token-equality check, and bars.
+  - **Attention:** a live `/attention-bench` at chosen sequence lengths and tile size, comparing reference, tiled and PyTorch SDPA, with time, extra memory and max error. All numbers are measured on request.
+- **Always:** the red-amber banner "Educational screening prototype — not a clinical enrollment decision" (one line on phones), and model status in the header (checking / loading / ready + GPU / offline).
+
+## States and recovery (checked live)
+
+| Situation | What the evaluator sees |
+| --- | --- |
+| No examples yet (backend starting) | Picker reads "Examples load when the backend is up"; retries every 5 s |
+| Empty note / empty criterion | Error summary (focused) linking to each field; fields marked invalid |
+| Backend down | Red status dot "Backend offline — start it with task app"; screening shows "The TrialMatch backend is not reachable. Start it with task app (or task api) and try again." |
+| Model loading / GPU out of memory | Amber alert with the backend's message and "wait for the status light to turn green" |
+| Unreadable model answer | Row says "answer unreadable — needs review"; the outcome counts it as needs review |
+| Stopped mid-run | Unscreened rows read "not screened"; the outcome waits, with "Edit criteria" |
+
+## Screenshots
+
+`uv run --with playwright python -m scripts.ui_screens` (app running) drives the installed Microsoft Edge and writes `results/ui/` (no browser download):
+- first run;
+- validation error;
+- results with a selected row;
+- decoder benchmark;
+- attention benchmark;
+- mobile first run and mobile results.
+
+The captures from 8 Nov were taken **on battery**, so their timings are throttled (decode about 5–10x slower). Recapture plugged in before the demo or the paper.
+
+## Checks
+
+- **Build and backend tests:** `pnpm build` (types + production build) is clean; pytest covers `/examples` and `/aggregate` (23 app tests).
+- **Responsive:** desktop at 1440 px; mobile at 390 px with touch emulation. The page never overflows horizontally, and answer boxes move under the text with labels.
+- **impeccable finish review** (in-thread fallback): disposition **fix** → four fixes:
+  - mobile row reflow;
+  - removed the kicker above the verdict;
+  - drawn stepper icons;
+  - touch-safe hover.
+
+  All four scored resolved, and one regression (ring spacing) was fixed, so the disposition is **ship** for the scored fixes.
+- **Not run:** impeccable's downloaded engine binary (concept dice, detector, comp tools), deliberately. The direction was chosen by the owner from three grounded options (seed: none, unavailable).
+
+## Clarity pass (owner feedback: "confusing steps, benchmarks unclear")
+
+impeccable `clarify` / `onboard`:
+- **Screen page:**
+  - a three-step strip (Patient note → Trial criteria → Results) with done, current and to-do states;
+  - the form is renamed **Trial criteria**, and the primary action is **Check eligibility**;
+  - the generation method moved into a collapsed **Advanced** row with one plain line per method ("all three give the same answer; they differ only in speed");
+  - the first-run box now just says *try an example first*.
+- **Results lead with a summary line:** counts (met / not met / can't tell / don't apply), an **Overall: <outcome> · why ↓** link to the rule block, and a plain legend (filled box = model, dashed circle = expert).
+- **Benchmarks:**
+  - tabs are named **Speed** and **Memory**, each opening with a plain-language explanation (what a token is, what each method does, what attention and tiling are);
+  - after a run, a **What this run shows** box states the findings in sentences, computed from that run's numbers: identical answers, the fastest method and by how much, acceptance and why speculative did or didn't win, the memory ratio, error size and why tiled is slower;
+  - column headers are in plain words (reading the prompt, writing the answer, GPU memory, drafts accepted).
+
+## Google Stitch exploration (9 Nov 2026)
+
+Stitch was connected through MCP: `.mcp.json` reads `STITCH_API_KEY` from the environment, and `.claude/settings.local.json` approves the server.
+- **Setup:** project "TrialMatch · criterion screening", with our tokens loaded as its design system (Public Sans, form blue, cool white, 4 px corners, the DESIGN.md rules).
+- **Generation:** it generated the Screen page from a description of the real content. Saved as `results/ui/stitch-exploration.png`. **Note:** it contains invented placeholder data.
+
+**Rejected** (invented or misleading, against "real data only"):
+- a latency readout, a named user, a patient ID and encounter details;
+- "confidence" scores, and a made-up "confidence threshold" rule;
+- an "Audit & Export" tab;
+- decorative monospace everywhere.
+
+**Adopted** (each uses data the app really has):
+1. **Citation tags on every note sentence,** showing which rows cite it, clickable, plus a "7 sentences · 5 cited" count.
+2. **Expert disagreement shown inline** on the row ("Expert: not included") without selecting it.
+3. **A one-line progress bar** with connectors; the last step shows the outcome as a tag.
+4. **Evidence shown as quoted sentences** in the row detail.
+5. **Boxed sentence numbers.**

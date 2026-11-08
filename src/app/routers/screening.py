@@ -3,8 +3,9 @@
 from fastapi import APIRouter, Request
 from fastapi.responses import Response
 
-from src.app import bench, report, screening
-from src.app.schemas.screen import AttentionBenchRequest, BenchRequest, ReportRequest, ScreenRequest, ScreenResponse
+from src.app import bench, examples, report, screening
+from src.app.schemas.screen import (AggregateRequest, AttentionBenchRequest, BenchRequest, Overall, ReportRequest, ScreenRequest,
+                                    ScreenResponse)
 
 router = APIRouter()
 
@@ -20,9 +21,21 @@ def health(request: Request) -> dict:
             "draft_loaded": bool(e and e.draft_loaded), "provenance": e.provenance if e else None}
 
 
+@router.get("/examples")
+def list_examples() -> list[dict]:
+    """Validation-split notes with their expert-annotated criteria (the UI's "load example")."""
+    return examples.examples()
+
+
 @router.post("/screen", response_model=ScreenResponse)
 def screen(body: ScreenRequest, request: Request) -> dict:
     return screening.screen(engine(request), body.note, [c.model_dump() for c in body.criteria], body.mode, body.gamma)
+
+
+@router.post("/aggregate", response_model=Overall)
+def aggregate(body: AggregateRequest) -> dict:
+    """The ADR 0002 outcome rule over labels screened one criterion at a time (the UI's row-by-row run)."""
+    return screening.aggregate([r.model_dump() for r in body.results])
 
 
 @router.post("/benchmark")

@@ -94,8 +94,19 @@ tasks:
       - uv run python -m src.speculative.bench
 
   app:
-    desc: "Start the API on http://localhost:8000 (/docs to try every endpoint); the browser app is added by TRIA-13"
+    desc: "Start the API (:8000) and the browser app — open http://localhost:3000 (TRIA-12/13)"
+    deps: [api, web]
+
+  api:
+    desc: "API only on http://localhost:8000 (/docs to try every endpoint)"
     env:
       HF_HUB_OFFLINE: "1"
     cmds:
       - uv run uvicorn src.app.main:app --port 8000
+
+  web:
+    desc: Browser app only on http://localhost:3000 (installs packages on first run)
+    dir: web
+    cmds:
+      - pnpm install --frozen-lockfile
+      - pnpm dev

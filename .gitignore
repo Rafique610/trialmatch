@@ -37,3 +37,15 @@ Thumbs.db
 
 # local model copies (C: drive is full)
 models/
+
+# third-party design skills (installed locally: impeccable @924bbd1, ui-ux-pro-max @4f2dbb6)
+.claude/skills/
+
+# web
+.pnpm-store/
+web/node_modules/
+web/.next/
+web/next-env.d.ts
+web/tsconfig.tsbuildinfo
+.impeccable/review/
+.claude/settings.local.json

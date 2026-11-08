@@ -98,6 +98,15 @@ class AttentionBenchRequest(BaseModel):
     block: Literal[32, 64, 128, 256] = 128
 
 
+class LabelledCriterion(BaseModel):
+    type: Literal["inclusion", "exclusion"]
+    label: Label | None
+
+
+class AggregateRequest(BaseModel):
+    results: list[LabelledCriterion] = Field(min_length=1, max_length=30)
+
+
 class ReportRequest(BaseModel):
     result: ScreenResponse
     format: Literal["markdown", "html"] = "html"

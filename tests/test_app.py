@@ -144,3 +144,20 @@ def test_real_screen_all_modes():
     assert labels["no_cache"] == labels["kv_cache"] == labels["speculative"]  # same greedy answer from every decoder
     b = c.post("/benchmark", json={"note": NOTE, "criterion": {"type": "exclusion", "text": "History of stroke"}, "gamma": 2}).json()
     assert all(r["same_tokens_as_kv_cache"] for r in b["runs"])
+
+
+def test_examples_are_real_val_records(client):
+    ex = client.get("/examples").json()
+    assert 1 <= len(ex) <= 6 and len({e["patient_id"] for e in ex}) == len(ex)
+    e = ex[0]
+    assert e["note"].startswith("0. ") and 1 <= len(e["criteria"]) <= 8
+    c = e["criteria"][0]
+    assert c["type"] in ("inclusion", "exclusion") and c["expert_label"]
+    assert split_note(e["note"])[0] == e["note"].splitlines()[0][3:]  # numbered note parses back exactly
+
+
+def test_aggregate_endpoint_matches_rule(client):
+    r = client.post("/aggregate", json={"results": [{"type": "inclusion", "label": "included"}, {"type": "exclusion", "label": "excluded"}]})
+    assert r.status_code == 200 and r.json()["outcome"] == "likely ineligible" and r.json()["driving_criteria"] == [1]
+    assert client.post("/aggregate", json={"results": []}).status_code == 422
+    assert client.post("/aggregate", json={"results": [{"type": "inclusion", "label": "maybe"}]}).status_code == 422
