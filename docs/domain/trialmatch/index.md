@@ -102,8 +102,8 @@ tokens, nothing truncated).
 | TRIA-11 Speculative decoding | done |
 | TRIA-12 App backend | done |
 | TRIA-13 App frontend | done |
-| TRIA-14 Paper | in review |
-| TRIA-15 | backlog |
+| TRIA-14 Paper | done |
+| TRIA-15 Submission | in review |
 
 ## Baseline
 
@@ -169,6 +169,10 @@ Components are in `components/workbench/*` and `components/bench/*`. Styles: `ap
 ## Paper
 
 `report/` (IEEEtran) is built by `task paper`. `report/make_tables.py` turns `results/` into `report/tables/*.tex`, `numbers.tex` (the numbers used in the prose) and the figures. Tectonic lives in `.tools/` (git-ignored). Checklist and owner checks: `paper.md`.
+
+## Submission
+
+The README's *Submission* section lists every link. The fresh-clone path (clone → `uv sync` → `task data` → `task adapter-download` → `task app`) was verified on 9 Nov 2026: identical split manifest, 178 tests pass, the app answers. The demo script is in `docs/demo_script.md`, defence notes are in `docs/defense.md`, and the paper's video link is the `\VideoURL` macro in `report/main.tex`.
 
 ## Evaluation
 

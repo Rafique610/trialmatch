@@ -13,6 +13,8 @@
 \input{tables/numbers}
 
 \newcommand{\code}[1]{\texttt{\small #1}}
+% TODO before submitting: replace with \url{<your video link>}
+\newcommand{\VideoURL}{\textcolor{red}{[add video link]}}
 \tikzset{box/.style={draw=black!70, rounded corners=1pt, align=center, font=\scriptsize, inner sep=3pt, minimum height=0.85cm, text width=1.55cm},
          arr/.style={-{Stealth[length=4pt]}, thick, black!70}}
 
@@ -244,6 +246,9 @@ Fig.~\ref{fig:app} shows the screening view on a validation example: the selecte
 
 \section{Limitations}
 The training set is small (\TrainRows{} rows from 37 patients) and stylistically narrow (emergency-department case vignettes), so notes written differently are out of distribution. The test split contains no \emph{excluded} row, so that label is untested, and with 206 items the accuracy interval is about $\pm$6 points. Annotation conventions for unmentioned conditions are inconsistent, which bounds achievable agreement. The evaluation decoding included the library's default repetition penalty (labels unaffected on validation, evidence lists slightly so). Our attention and speculative implementations demonstrate correctness and memory behaviour but not speed, because they are not fused kernels; speculative decoding did not pay off on this GPU. The patient-level outcome is a rule over predicted labels, not a validated prediction, and one wrong criterion can flip it. The system is an educational prototype and must not be used for clinical enrollment decisions.
+
+\section{Code, Data and Demonstration}
+Source code, the split manifest, training and benchmark logs: \url{https://github.com/Rafique610/trialmatch}. Fine-tuned adapter: \url{https://huggingface.co/Aduhere/trialmatch-qwen2.5-1.5b-qlora}. Demonstration video: \VideoURL. A fresh clone reproduces the split (identical manifest), the tests and the application with five commands listed in the repository README.
 
 \section{Conclusion}
 A 1.5B open model fine-tuned with QLoRA on a 6\,GB laptop GPU learns criterion-level eligibility judgements with cited evidence, improving test accuracy from \TestAccBase{} to \TestAccFT{} and macro-F1 from \TestFoneBase{} to \TestFoneFT{}. Our own KV cache, tiled attention and speculative decoder are exact by construction and verified token for token; the cache gives large decode speed-ups for long prompts, tiling gives large memory savings, and speculative decoding shows, with measurements, why a draft must be much cheaper than the target to help. Future work: more diverse training notes, a consistent convention for unmentioned conditions, and fused kernels for the attention and decoding paths.
