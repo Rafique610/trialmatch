@@ -19,7 +19,7 @@ GenAI Assignment 2 · Muhammad Rafique (23i-0747, CS-B) · dataset: [TrialGPT Cr
 | Paper (IEEE, LaTeX) | [report/main.pdf](report/main.pdf) · source in [report/](report/) |
 | Code | https://github.com/Rafique610/trialmatch |
 | Fine-tuned adapter | https://huggingface.co/Aduhere/trialmatch-qwen2.5-1.5b-qlora (`task adapter-download`) |
-| Demo video (5–7 min) | *link added after recording* |
+| Demo video (5–7 min) | https://youtu.be/NcOP103VwKE |
 | Split manifest | [results/split_manifest.json](results/split_manifest.json) (patient ids, counts, file hashes) |
 | Training logs | `results/train_*/log.jsonl` (per step), `summary.json` (per epoch), [results/finetune_runs.md](results/finetune_runs.md) |
 | Evaluation outputs | `results/{baseline,finetuned}_{val,test}/` (predictions, metrics, confusion matrices), [results/error_analysis.md](results/error_analysis.md) |

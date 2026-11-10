@@ -172,7 +172,7 @@ Components are in `components/workbench/*` and `components/bench/*`. Styles: `ap
 
 ## Submission
 
-The README's *Submission* section lists every link. The fresh-clone path (clone → `uv sync` → `task data` → `task adapter-download` → `task app`) was verified on 9 Nov 2026: identical split manifest, 178 tests pass, the app answers. The demo script is in `docs/demo_script.md`, defence notes are in `docs/defense.md`, and the paper's video link is the `\VideoURL` macro in `report/main.tex`.
+The README's *Submission* section lists every link. The fresh-clone path (clone → `uv sync` → `task data` → `task adapter-download` → `task app`) was verified on 9 Nov 2026: identical split manifest, 178 tests pass, the app answers. The demo script is in `docs/demo_script.md`, defence notes are in `docs/defense.md`, and the demo video is https://youtu.be/NcOP103VwKE (README table and the `\VideoURL` macro in `report/main.tex`).
 
 ## Evaluation
 

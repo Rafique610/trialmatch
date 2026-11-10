@@ -54,7 +54,7 @@ and gave the same labels on the 8 smoke rows.
 - `results/train_<run>/epoch_<k>/`: validation predictions and metrics per epoch
 - `results/finetune_runs.md` + `results/finetune_val_curves.png`: comparison across runs (`task train-report`)
 - `results/finetune_queue.log`: start, end and exit code of each run
-- `checkpoints/`: adapters (git-ignored). The chosen one is public at
+- `checkpoints/`: adapters (git-ignored). On 10 Nov 2026 the 19 epoch checkpoints other than the chosen one (`C_r16_weighted/epoch_4`, identical to `final/`) were deleted to free disk. Per-epoch metrics stay in `results/train_*/`; `task train` regenerates any checkpoint (about 1 h per config). The chosen one is public at
   https://huggingface.co/Aduhere/trialmatch-qwen2.5-1.5b-qlora (`task adapter-upload`,
   `scripts/upload_adapter.py`, which writes the model card). `task adapter-download` fetches it into
   `checkpoints/final/` without a login (`settings.adapter_repo_id`).
